@@ -1,0 +1,42 @@
+﻿<src:Base4Windows x:Class="AKV.KostensatzBezahlen"
+		xmlns:src="clr-namespace:AKV"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AKV"
+        mc:Ignorable="d"
+        Title="Kostensatz bezahlen" MinHeight="100" MinWidth="300" Height="0" Width="0">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition />
+            <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Label Content="Bezahlt am: " Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" />
+            <DatePicker Name="bezahltAm" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+
+            <DockPanel Grid.Column="1" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                <Button Name="bezahlen" Content="Bezahlen" Click="bezahlen_Click"/>
+                <Label Width="10" />
+                <Button Name="abbrechen" Content="Abbrechen" Click="abbrechen_Click"/>
+            </DockPanel>
+        </Grid>
+    </Grid>
+</src:Base4Windows>
