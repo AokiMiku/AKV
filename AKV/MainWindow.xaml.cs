@@ -52,11 +52,12 @@
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
 			this.ActualizeKonten();
+			this.Actualize();
 
 			if (UserSettings.BeimStartKontoOeffnen && !string.IsNullOrEmpty(UserSettings.ZuletztOffenesKonto))
 			{
 				this.konten.SelectedItem = UserSettings.ZuletztOffenesKonto;
-            }
+			}
 		}
 
 		private void ActualizeKonten()
@@ -94,7 +95,6 @@
 
 				this.currentKonto_nr = konto.Nummer;
 
-				this.ActualizeUnterKonten();
 				this.Actualize();
 			}
 		}
@@ -108,6 +108,7 @@
 			else
 			{
 				this.frontend.RowDefinitions[1].Height = new GridLength(50);
+				this.ActualizeUnterKonten();
 			}
 
 			if (this.konten.SelectedItem != null)
@@ -155,7 +156,7 @@
 						this.verblBetrag.Foreground = Brushes.LightGreen;
 					}
 					core.Name = konto.Name;
-                    this.gesamtBetrag.Content = core.GesamtBetrag().ToString("0.00 €");
+					this.gesamtBetrag.Content = core.GesamtBetrag().ToString("0.00 €");
 				}
 			}
 			else
@@ -179,7 +180,7 @@
 				return;
 
 			new KostensatzBezahlen().Start(((Kosten4Table)this.kosten.SelectedItem).Nummer);
-			
+
 			this.Actualize();
 		}
 
@@ -224,7 +225,7 @@
 		{
 			int i = this.konten.SelectedIndex;
 			new NeuesKonto().Start(this.currentKonto_nr);
-			
+
 			this.ActualizeKonten();
 			this.konten.SelectedIndex = i;
 		}
@@ -253,8 +254,8 @@
 
 		private void editKosten_Click(object sender, RoutedEventArgs e)
 		{
-            new NeuerKostensatz().Start(this.currentKonto_nr, ((Kosten4Table)this.kosten.SelectedItem).Nummer);
-			
+			new NeuerKostensatz().Start(this.currentKonto_nr, ((Kosten4Table)this.kosten.SelectedItem).Nummer);
+
 			this.Actualize();
 		}
 
@@ -348,6 +349,7 @@
 			{
 				UserSettings.ZuletztOffenesKonto = this.konten.SelectedItem.ToString();
 			}
+			UserSettings.LetzterStartAm = DateTime.Now.Date;
 		}
 	}
 }

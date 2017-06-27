@@ -32,5 +32,11 @@
 			get { return Core.CoreSettings.GetSetting("ZuletztOffenesKonto"); }
 			set { Core.CoreSettings.SetSetting("ZuletztOffenesKonto", value); }
 		}
+
+		public static DateTime LetzterStartAm
+		{
+			get { return Core.CoreSettings.GetSetting("LetzterStartAm").ToDateTime(); }
+			set { Core.CoreSettings.SetSetting("LetzterStartAm", value); }
+		}
 	}
 }

@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FirebirdSql.Data.FirebirdClient">
-      <HintPath>..\ApS\ApS.Firebird\firebird\FirebirdSql.Data.FirebirdClient.dll</HintPath>
+      <HintPath>..\..\ApS\ApS.Firebird\firebird\FirebirdSql.Data.FirebirdClient.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -64,11 +64,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ApS\ApS.Firebird\ApS.Firebird.csproj">
+    <ProjectReference Include="..\..\ApS\ApS.Firebird\ApS.Firebird.csproj">
       <Project>{ed3cc517-7e8a-421a-b7cd-fec0cfd1ccd1}</Project>
       <Name>ApS.Firebird</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ApS\ApS\ApS.csproj">
+    <ProjectReference Include="..\..\ApS\ApS\ApS.csproj">
       <Project>{8ea157c8-a629-4d86-a745-49f0d82520ef}</Project>
       <Name>ApS</Name>
     </ProjectReference>

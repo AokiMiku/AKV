@@ -1,5 +1,6 @@
 ﻿namespace AKVCore
 {
+	using System;
 	using ApS;
 	public class Einstellungen : Business
 	{
@@ -46,6 +47,11 @@
 		}
 
 		public void SetSetting(string key, bool value)
+		{
+			this.SetSetting(key, value.ToString());
+		}
+
+		public void SetSetting(string key, DateTime value)
 		{
 			this.SetSetting(key, value.ToString());
 		}

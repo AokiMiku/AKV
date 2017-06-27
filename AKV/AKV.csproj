@@ -133,17 +133,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AKVCore\AKVCore.csproj">
-      <Project>{a28b712a-7e21-4abb-bd82-fcc143a24933}</Project>
-      <Name>AKVCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ApS\ApS.Firebird\ApS.Firebird.csproj">
+    <ProjectReference Include="..\..\ApS\ApS.Firebird\ApS.Firebird.csproj">
       <Project>{ed3cc517-7e8a-421a-b7cd-fec0cfd1ccd1}</Project>
       <Name>ApS.Firebird</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ApS\ApS\ApS.csproj">
+    <ProjectReference Include="..\..\ApS\ApS\ApS.csproj">
       <Project>{8ea157c8-a629-4d86-a745-49f0d82520ef}</Project>
       <Name>ApS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AKVCore\AKVCore.csproj">
+      <Project>{a28b712a-7e21-4abb-bd82-fcc143a24933}</Project>
+      <Name>AKVCore</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

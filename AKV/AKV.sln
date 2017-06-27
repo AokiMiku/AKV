@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AKV", "AKV.csproj", "{69D1056B-2318-4E62-BCBC-F2BD01EE96A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApS", "..\ApS\ApS\ApS.csproj", "{8EA157C8-A629-4D86-A745-49F0D82520EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApS", "..\..\ApS\ApS\ApS.csproj", "{8EA157C8-A629-4D86-A745-49F0D82520EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApS.Firebird", "..\ApS\ApS.Firebird\ApS.Firebird.csproj", "{ED3CC517-7E8A-421A-B7CD-FEC0CFD1CCD1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApS.Firebird", "..\..\ApS\ApS.Firebird\ApS.Firebird.csproj", "{ED3CC517-7E8A-421A-B7CD-FEC0CFD1CCD1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AKVCore", "..\AKVCore\AKVCore.csproj", "{A28B712A-7E21-4ABB-BD82-FCC143A24933}"
 EndProject
