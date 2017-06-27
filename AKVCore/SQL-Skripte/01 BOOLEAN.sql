@@ -1,0 +1,3 @@
+CREATE DOMAIN BOOLEAN AS
+SMALLINT
+CHECK (value = 1 or value = 0);
