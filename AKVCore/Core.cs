@@ -17,7 +17,7 @@
 	{
 		#region Fields/Properties
 		#region public
-		public event EventHandler<ErrorEventArgs> ErrorOccured;
+		public static event EventHandler<ErrorEventArgs> ErrorOccured;
 		public static Einstellungen CoreSettings = new Einstellungen();
 		#endregion public
 		#region private/protected
@@ -85,7 +85,7 @@
 
 		private void VersionenErrorOccured(object sender, ErrorInUpdate e)
 		{
-			this.ErrorOccured?.Invoke(this, new ErrorEventArgs(e.ErrorMessage));
+			ErrorOccured?.Invoke(this, new ErrorEventArgs(e.ErrorMessage));
 		}
 
 		public class KontoCore : Core
@@ -108,7 +108,7 @@
 			public void Add()
 			{
 				Konto konto = new Konto();
-				konto.Where = "name = '" + this.Name + "'";
+				konto.Where = "Name = '" + this.Name + "'";
 				konto.Read();
 
 				konto.Name = this.Name;
@@ -119,6 +119,8 @@
 
 				if (konto.EoF)
 					konto.BuildSaveStmt(SqlAction.Insert);
+				else
+					ErrorOccured?.Invoke(this, new ErrorEventArgs("Es existiert bereits eine Kategorie mit diesem Namen!"));
 
 				konto.Save();
 
@@ -197,8 +199,13 @@
 
 			public void Add()
 			{
+				if (this.Konto_Nr == 0)
+				{
+					ErrorOccured?.Invoke(this, new ErrorEventArgs("Es wurde keine Kategorie ausgewählt, zu der diese Unterkategorie gehören soll!"));
+					return;
+				}
 				UnterKonto konto = new UnterKonto();
-				konto.Where = "name = '" + this.Name + "'";
+				konto.Where = "Name = '" + this.Name + "' AND Konto_Nr = " + this.Konto_Nr;
 				konto.Read();
 
 				konto.Name = this.Name;
@@ -207,6 +214,8 @@
 
 				if (konto.EoF)
 					konto.BuildSaveStmt(SqlAction.Insert);
+				else
+					ErrorOccured?.Invoke(this, new ErrorEventArgs("Es existiert bereits eine Unterkategorie mit diesem Namen zu diesem Konto!"));
 
 				konto.Save();
 
@@ -332,7 +341,7 @@
 
 				if (kosten.EoF)
 				{
-					this.ErrorOccured?.Invoke(this, new ErrorEventArgs("Kostensatz nicht gefunden."));
+					ErrorOccured?.Invoke(this, new ErrorEventArgs("Kostensatz nicht gefunden."));
 					return;
 				}
 
@@ -344,14 +353,32 @@
 				konto.Where = "Nummer = " + kosten.Konto_Nr;
 				konto.Read();
 
+				UnterKonto uKonto = null;
+				if (kosten.UnterKonto_Nr != 0)
+				{
+					uKonto = new UnterKonto();
+					uKonto.Where = "Nummer = " + kosten.UnterKonto_Nr;
+					uKonto.Read();
+				}
+
 				if (!konto.EoF)
 				{
 					if (kosten.Einnahme)
+					{
 						konto.Saldo = konto.Saldo + kosten.Betrag;
+						if (uKonto != null && uKonto.RecordCount == 1)
+							uKonto.Saldo = uKonto.Saldo + kosten.Betrag;
+					}
 					else
+					{
 						konto.Saldo = konto.Saldo - kosten.Betrag;
+						if (uKonto != null && uKonto.RecordCount == 1)
+							uKonto.Saldo = uKonto.Saldo - kosten.Betrag;
+					}
 				}
 				konto.Save(SqlAction.Update);
+				if (uKonto != null && uKonto.RecordCount == 1)
+					uKonto.Save(SqlAction.Update);
 			}
 
 			public void Delete(int kosten_nr)
@@ -360,15 +387,39 @@
 				kosten.Where = "Nummer = " + kosten_nr;
 				kosten.Read();
 
+
 				if (kosten.Bezahlt)
 				{
 					Konto konto = new Konto();
 					konto.Where = "Nummer = " + kosten.Konto_Nr;
 					konto.Read();
 
-					konto.Saldo = konto.Saldo + kosten.Betrag;
+					UnterKonto uKonto = null;
+					if (kosten.UnterKonto_Nr != 0)
+					{
+						uKonto = new UnterKonto();
+						uKonto.Where = "Nummer = " + kosten.UnterKonto_Nr;
+						uKonto.Read();
+					}
 
+					if (!konto.EoF)
+					{
+						if (kosten.Einnahme)
+						{
+							konto.Saldo = konto.Saldo + kosten.Betrag;
+							if (uKonto != null && uKonto.RecordCount == 1)
+								uKonto.Saldo = uKonto.Saldo + kosten.Betrag;
+						}
+						else
+						{
+							konto.Saldo = konto.Saldo - kosten.Betrag;
+							if (uKonto != null && uKonto.RecordCount == 1)
+								uKonto.Saldo = uKonto.Saldo - kosten.Betrag;
+						}
+					}
 					konto.Save(SqlAction.Update);
+					if (uKonto != null && uKonto.RecordCount == 1)
+						uKonto.Save(SqlAction.Update);
 				}
 				kosten.Save(SqlAction.Delete);
 
@@ -384,16 +435,38 @@
 				konto.Where = "Nummer = " + kosten.Konto_Nr;
 				konto.Read();
 
+				UnterKonto uKonto = null;
+				if (kosten.UnterKonto_Nr != 0)
+				{
+					uKonto = new UnterKonto();
+					uKonto.Where = "Nummer = " + kosten.UnterKonto_Nr;
+					uKonto.Read();
+				}
+
 				if (this.Betrag.ToString().StartsWith("-"))
 					this.Betrag *= -1;
 
 				if (kosten.Bezahlt)
 				{
 					if (kosten.Einnahme)
+					{
 						konto.Saldo = konto.Saldo - kosten.Betrag;
+						if (uKonto != null && uKonto.RecordCount == 1)
+							uKonto.Saldo = uKonto.Saldo - kosten.Betrag;
+					}
 					else
+					{
 						konto.Saldo = konto.Saldo + kosten.Betrag;
+						if (uKonto != null && uKonto.RecordCount == 1)
+							uKonto.Saldo = uKonto.Saldo + kosten.Betrag;
+					}
 					konto.Save(SqlAction.Update);
+					konto.Read();
+					if (uKonto != null && uKonto.RecordCount == 1)
+					{
+						uKonto.Save(SqlAction.Update);
+						uKonto.Read();
+					}
 				}
 
 
@@ -416,12 +489,21 @@
 
 				if (kosten.Bezahlt)
 				{
-					konto.Read();
 					if (kosten.Einnahme)
+					{
 						konto.Saldo = konto.Saldo + kosten.Betrag;
+						if (uKonto != null && uKonto.RecordCount == 1)
+							uKonto.Saldo = uKonto.Saldo + kosten.Betrag;
+					}
 					else
+					{
 						konto.Saldo = konto.Saldo - kosten.Betrag;
+						if (uKonto != null && uKonto.RecordCount == 1)
+							uKonto.Saldo = uKonto.Saldo - kosten.Betrag;
+					}
 					konto.Save(SqlAction.Update);
+					if (uKonto != null && uKonto.RecordCount == 1)
+						uKonto.Save(SqlAction.Update);
 				}
 			}
 

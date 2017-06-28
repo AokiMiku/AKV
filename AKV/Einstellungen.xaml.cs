@@ -25,11 +25,15 @@
 		{
 			InitializeComponent();
 
+			this.beimStartKontoOeffnen.IsChecked = UserSettings.BeimStartKontoOeffnen;
 			this.unterKontenAktiv.IsChecked = UserSettings.UnterKonten;
 			if (this.unterKontenAktiv.IsChecked == true)
+			{
 				this.kostenPerUnterKonto.IsEnabled = true;
+				this.unterKontoSummieren.IsEnabled = true;
+			}
 			this.kostenPerUnterKonto.IsChecked = UserSettings.KostenPerUnterKonto;
-			this.beimStartKontoOeffnen.IsChecked = UserSettings.BeimStartKontoOeffnen;
+			this.unterKontoSummieren.IsChecked = UserSettings.UnterKontoSummieren;
 		}
 
 		private void unterKontenAktiv_Click(object sender, RoutedEventArgs e)
@@ -37,10 +41,12 @@
 			if (this.unterKontenAktiv.IsChecked == true)
 			{
 				this.kostenPerUnterKonto.IsEnabled = true;
+				this.unterKontoSummieren.IsEnabled = true;
 			}
 			else
 			{
 				this.kostenPerUnterKonto.IsEnabled = false;
+				this.unterKontoSummieren.IsEnabled = false;
 			}
 		}
 
@@ -49,6 +55,7 @@
 			UserSettings.BeimStartKontoOeffnen = this.beimStartKontoOeffnen.IsChecked == true;
 			UserSettings.UnterKonten = this.unterKontenAktiv.IsChecked == true;
 			UserSettings.KostenPerUnterKonto = this.kostenPerUnterKonto.IsChecked == true;
+			UserSettings.UnterKontoSummieren = this.unterKontoSummieren.IsChecked == true;
 
 			this.DialogResult = true;
 			this.Close();

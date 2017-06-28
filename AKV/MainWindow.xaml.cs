@@ -74,6 +74,7 @@
 
 		private void ActualizeUnterKonten()
 		{
+			object select = this.unterKonten.SelectedItem;
 			this.unterKonten.Items.Clear();
 			Core.UnterKontoCore core = new Core.UnterKontoCore();
 			core.Konto_Nr = this.currentKonto_nr;
@@ -83,6 +84,7 @@
 				this.unterKonten.Items.Add(konto.Name);
 				konto.Skip();
 			}
+			this.unterKonten.SelectedItem = select;
 		}
 
 		private void konten_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -101,11 +103,11 @@
 
 		private void Actualize()
 		{
-			if (!UserSettings.UnterKonten)
+			if (!UserSettings.UnterKonten && this.frontend.RowDefinitions[1].Height == new GridLength(50))
 			{
 				this.frontend.RowDefinitions[1].Height = new GridLength(0);
 			}
-			else
+			else if (this.frontend.RowDefinitions[1].Height == new GridLength(0))
 			{
 				this.frontend.RowDefinitions[1].Height = new GridLength(50);
 				this.ActualizeUnterKonten();
@@ -119,23 +121,10 @@
 				this.gesamtBetrag.Visibility = Visibility.Visible;
 				this.editKonto.IsEnabled = true;
 				this.delKonto.IsEnabled = true;
-				Core.KontoCore core = new Core.KontoCore();
-				this.kosten.ItemsSource = core.GetAlleKosten(this.currentKonto_nr);
+				Core.KontoCore kontoCore = new Core.KontoCore();
+				this.kosten.ItemsSource = kontoCore.GetAlleKosten(this.currentKonto_nr);
 				this.addKosten.IsEnabled = true;
 
-				if (this.unterKonten.SelectedItem != null)
-				{
-					this.editUnterKonto.IsEnabled = true;
-					this.delUnterKonto.IsEnabled = true;
-
-					if (UserSettings.KostenPerUnterKonto)
-					{
-						Core.UnterKontoCore uKontoCore = new Core.UnterKontoCore();
-						this.kosten.ItemsSource = uKontoCore.GetAlleKosten(this.currentUnterKonto_nr);
-					}
-				}
-				if (!UserSettings.UnterKonten)
-					this.kosten.Columns.Where(x => x.Header.ToString() == "UnterKategorie").First().Visibility = Visibility.Hidden;
 				this.kosten.Columns.Where(x => x.Header.ToString() == "Nummer").First().Visibility = Visibility.Hidden;
 
 				Konto konto = new Konto();
@@ -144,7 +133,6 @@
 
 				if (!konto.EoF)
 				{
-					this.betrag.Content = konto.Saldo.ToString("0.00 €");
 					if (konto.Saldo > 0)
 					{
 						this.betrag.Foreground = Brushes.Red;
@@ -155,8 +143,52 @@
 						this.betrag.Foreground = Brushes.LightGreen;
 						this.verblBetrag.Foreground = Brushes.LightGreen;
 					}
-					core.Name = konto.Name;
-					this.gesamtBetrag.Content = core.GesamtBetrag().ToString("0.00 €");
+					kontoCore.Name = konto.Name;
+					this.betrag.Content = konto.Saldo.ToString("0.00 €");
+					this.gesamtBetrag.Content = kontoCore.GesamtBetrag().ToString("0.00 €");
+				}
+
+				if (UserSettings.UnterKonten)
+				{
+					Core.UnterKontoCore uKontoCore = new Core.UnterKontoCore();
+					if (this.unterKonten.SelectedItem != null)
+					{
+						this.editUnterKonto.IsEnabled = true;
+						this.delUnterKonto.IsEnabled = true;
+
+						if (UserSettings.KostenPerUnterKonto)
+						{
+							this.kosten.ItemsSource = uKontoCore.GetAlleKosten(this.currentUnterKonto_nr);
+						}
+
+						if (UserSettings.UnterKontoSummieren)
+						{
+							UnterKonto uKonto = new UnterKonto();
+							uKonto.Where = "Nummer = " + this.currentUnterKonto_nr;
+							uKonto.Read();
+
+							if (!uKonto.EoF)
+							{
+								if (uKonto.Saldo > 0)
+								{
+									this.betrag.Foreground = Brushes.Red;
+									this.verblBetrag.Foreground = Brushes.Red;
+								}
+							}
+							else
+							{
+								this.betrag.Foreground = Brushes.LightGreen;
+								this.verblBetrag.Foreground = Brushes.LightGreen;
+							}
+							uKontoCore.Name = uKonto.Name;
+							this.betrag.Content = uKonto.Saldo.ToString("0.00 €");
+							this.gesamtBetrag.Content = uKontoCore.GesamtBetrag().ToString("0.00 €");
+						}
+					}
+				}
+				else
+				{
+					this.kosten.Columns.Where(x => x.Header.ToString() == "UnterKategorie").First().Visibility = Visibility.Hidden;
 				}
 			}
 			else
@@ -345,7 +377,7 @@
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			if (UserSettings.BeimStartKontoOeffnen)
+			if (UserSettings.BeimStartKontoOeffnen && this.konten.SelectedItem != null)
 			{
 				UserSettings.ZuletztOffenesKonto = this.konten.SelectedItem.ToString();
 			}

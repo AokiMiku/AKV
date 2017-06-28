@@ -19,6 +19,13 @@
 			//this.GotFocus += Window_GotFocus;
 			ApS.Settings.ErrorLogFile = ApS.Services.GetAppDir() + "\\Logs\\Error_" + ApS.Services.GetTimeStamp() + ".log";
 			Application.Current.DispatcherUnhandledException += UnhandledException;
+
+			AKVCore.Core.ErrorOccured += Core_ErrorOccured;
+		}
+
+		private void Core_ErrorOccured(object sender, AKVCore.ErrorEventArgs e)
+		{
+			MessageBox.Show(this, e.ErrorMessage, "Fehler", MessageBoxButton.OK);
 		}
 
 		private void UnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)

@@ -36,8 +36,8 @@
             <GroupBox Header="Allgemein" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="300" />
-                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -51,8 +51,8 @@
             <GroupBox Header="Unter-Kategorien"  Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="300" />
-                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -60,7 +60,8 @@
                     </Grid.RowDefinitions>
 					
                     <CheckBox Name="unterKontenAktiv" Content="Aktiv" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Click="unterKontenAktiv_Click" />
-					<CheckBox Name="kostenPerUnterKonto" Content="Kostensätze per Unter-Kategorie anzeigen" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" IsEnabled="False" />
+                    <CheckBox Name="kostenPerUnterKonto" Content="Kostensätze per Unter-Kategorie anzeigen" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" IsEnabled="False" />
+                    <CheckBox Name="unterKontoSummieren" Content="Gesamt-/verbleibende Summe pro Unterkategorie anzeigen" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" IsEnabled="False" />
                 </Grid>
             </GroupBox>
             <DockPanel Grid.Column="1" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" >

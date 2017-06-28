@@ -9,18 +9,7 @@
 	using ApS;
 	public static class UserSettings
 	{
-		public static bool UnterKonten
-		{
-			get { return Core.CoreSettings.GetSetting("UnterKonten").ToBoolean(); }
-			set { Core.CoreSettings.SetSetting("UnterKonten", value); }
-		}
-
-		public static bool KostenPerUnterKonto
-		{
-			get { return Core.CoreSettings.GetSetting("KostenPerUnterKonto").ToBoolean(); }
-			set { Core.CoreSettings.SetSetting("KostenPerUnterKonto", value); }
-		}
-
+		#region Allgemein
 		public static bool BeimStartKontoOeffnen
 		{
 			get { return Core.CoreSettings.GetSetting("BeimStartKontoOeffnen").ToBoolean(); }
@@ -38,5 +27,26 @@
 			get { return Core.CoreSettings.GetSetting("LetzterStartAm").ToDateTime(); }
 			set { Core.CoreSettings.SetSetting("LetzterStartAm", value); }
 		}
+		#endregion Allgemein
+
+		#region UnterKonten
+		public static bool UnterKonten
+		{
+			get { return Core.CoreSettings.GetSetting("UnterKonten").ToBoolean(); }
+			set { Core.CoreSettings.SetSetting("UnterKonten", value); }
+		}
+
+		public static bool KostenPerUnterKonto
+		{
+			get { return Core.CoreSettings.GetSetting("KostenPerUnterKonto").ToBoolean(); }
+			set { Core.CoreSettings.SetSetting("KostenPerUnterKonto", value); }
+		}
+
+		public static bool UnterKontoSummieren
+		{
+			get { return Core.CoreSettings.GetSetting("UnterKontoSummieren").ToBoolean(); }
+			set { Core.CoreSettings.SetSetting("UnterKontoSummieren", value); }
+		}
+		#endregion UnterKonten
 	}
 }
