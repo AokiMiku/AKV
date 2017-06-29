@@ -279,14 +279,14 @@
 
 		private void addKosten_Click(object sender, RoutedEventArgs e)
 		{
-			new NeuerKostensatz().Start(this.currentKonto_nr);
+			new NeuerKostensatz().Start(this.currentKonto_nr, uKonto_nr: this.currentUnterKonto_nr);
 
 			this.Actualize();
 		}
 
 		private void editKosten_Click(object sender, RoutedEventArgs e)
 		{
-			new NeuerKostensatz().Start(this.currentKonto_nr, ((Kosten4Table)this.kosten.SelectedItem).Nummer);
+			new NeuerKostensatz().Start(this.currentKonto_nr, ((Kosten4Table)this.kosten.SelectedItem).Nummer, this.currentUnterKonto_nr);
 
 			this.Actualize();
 		}

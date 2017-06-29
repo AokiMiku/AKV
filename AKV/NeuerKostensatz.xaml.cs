@@ -158,10 +158,30 @@
 			this.Close();
 		}
 
-		public void Start(int konto_nr, int kosten_nr = -1)
+		public void Start(int konto_nr, int kosten_nr = -1, int uKonto_nr = -1)
 		{
 			this.kostenCore = new Core.KostenCore();
 			this.konto_nr = konto_nr;
+
+			if (!UserSettings.UnterKonten)
+			{
+				this.frontend.RowDefinitions[7].Height = new GridLength(0);
+			}
+			else
+			{
+				this.unterKonten.Items.Clear();
+				Core.UnterKontoCore core = new Core.UnterKontoCore();
+				core.Konto_Nr = this.konto_nr;
+				UnterKonto konto = core.GetAlleKonten();
+				while (!konto.EoF)
+				{
+					this.unterKonten.Items.Add(konto.Name);
+					if (uKonto_nr > 0 && uKonto_nr == konto.Nummer)
+						this.unterKonten.SelectedItem = konto.Name;
+					konto.Skip();
+				}
+			}
+
 			if (kosten_nr != -1)
 			{
 				this.kosten_nr = kosten_nr;
@@ -193,7 +213,7 @@
 					this.ausgabe.IsChecked = true;
 				this.notiz.Text = kosten.Notiz;
 
-				if (kosten.UnterKonto_Nr != 0)
+				if (kosten.UnterKonto_Nr > 0)
 				{
 					UnterKonto konto = new UnterKonto();
 					konto.Where = "Nummer = " + kosten.UnterKonto_Nr;
@@ -204,22 +224,6 @@
 				}
 			}
 
-			if (!UserSettings.UnterKonten)
-			{
-				this.frontend.RowDefinitions[7].Height = new GridLength(0);
-			}
-			else
-			{
-				this.unterKonten.Items.Clear();
-				Core.UnterKontoCore core = new Core.UnterKontoCore();
-				core.Konto_Nr = this.konto_nr;
-				UnterKonto konto = core.GetAlleKonten();
-				while (!konto.EoF)
-				{
-					this.unterKonten.Items.Add(konto.Name);
-					konto.Skip();
-				}
-			}
 
 			this.kostenCore.KostenExist += Core_KostenExist;
 			this.ShowDialog();
