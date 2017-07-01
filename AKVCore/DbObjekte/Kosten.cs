@@ -39,6 +39,11 @@
 			get { return this.GetInt("INTERVALL"); }
 			set { this.Put("INTERVALL", value); }
 		}
+		public string IntervallEinheit
+		{
+			get { return this.GetString("INTERVALLEINHEIT"); }
+			set { this.Put("INTERVALLEINHEIT", value); }
+		}
 		public bool Bezahlt
 		{
 			get { return this.GetBool("BEZAHLT"); }

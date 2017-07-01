@@ -78,6 +78,13 @@
 					v06_1.ErrorOccured -= VersionenErrorOccured;
 					CoreSettings.SetSetting("Version06_1Updated", true);
 					break;
+				case Versionen.Version07:
+					Datenbankversionen.Version07 v07 = new Datenbankversionen.Version07();
+					v07.ErrorOccured += VersionenErrorOccured;
+					v07.RunStatements();
+					v07.ErrorOccured -= VersionenErrorOccured;
+					CoreSettings.SetSetting("Version06_1Updated", true);
+					break;
 				default:
 					break;
 			}
@@ -406,15 +413,15 @@
 					{
 						if (kosten.Einnahme)
 						{
-							konto.Saldo = konto.Saldo + kosten.Betrag;
-							if (uKonto != null && uKonto.RecordCount == 1)
-								uKonto.Saldo = uKonto.Saldo + kosten.Betrag;
-						}
-						else
-						{
 							konto.Saldo = konto.Saldo - kosten.Betrag;
 							if (uKonto != null && uKonto.RecordCount == 1)
 								uKonto.Saldo = uKonto.Saldo - kosten.Betrag;
+						}
+						else
+						{
+							konto.Saldo = konto.Saldo + kosten.Betrag;
+							if (uKonto != null && uKonto.RecordCount == 1)
+								uKonto.Saldo = uKonto.Saldo + kosten.Betrag;
 						}
 					}
 					konto.Save(SqlAction.Update);
@@ -543,6 +550,7 @@
 		Version04,
 		Version05,
 		Version06,
-		Version06_1
+		Version06_1,
+		Version07
 	}
 }

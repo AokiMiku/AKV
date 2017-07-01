@@ -59,13 +59,13 @@
                 <Button Name="delUnterKonto" Content="-" Width="20" IsEnabled="False" Click="delUnterKonto_Click"/>
             </DockPanel>
             <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" >
-                <DockPanel>
-                    <Label Name="gesBetrag" Content="Gesamtbetrag:" Visibility="Hidden" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                    <Label Name="gesamtBetrag" Content="XXX" Visibility="Hidden" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                <DockPanel Name="gesBetragContainer">
+                    <Label Name="gesBetrag" Content="Gesamtbetrag:" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                    <Label Name="gesamtBetrag" Content="XXX" HorizontalAlignment="Right" VerticalAlignment="Center" />
                 </DockPanel>
                 <DockPanel>
-                    <Label Name="verblBetrag" Content="Verbleibender Betrag:" Visibility="Hidden" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                    <Label Name="betrag"  Content="XXX" Visibility="Hidden" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                    <Label Name="verblBetrag" Content="Verbleibender Betrag:" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                    <Label Name="betrag"  Content="XXX" HorizontalAlignment="Right" VerticalAlignment="Center" />
                 </DockPanel>				
             </StackPanel>
             <Button Name="addKosten" Content="Hinzufügen" IsEnabled="False" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Click="addKosten_Click"/>

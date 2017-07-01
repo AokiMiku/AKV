@@ -22,6 +22,7 @@ CREATE TABLE Kosten
 	Bezeichnung		varchar(100) NOT NULL,
 	Betrag			decimal(18,2) NOT NULL,
 	Intervall		integer NOT NULL,
+	IntervallEinheit varchar(100) NOT NULL,
 	Bezahlt			BOOLEAN DEFAULT 0 NOT NULL,
 	BezahltAm		date,
 	LaufzeitBis		date,

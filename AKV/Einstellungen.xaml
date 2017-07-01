@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AKV"
         mc:Ignorable="d"
-        Title="Einstellungen" MinHeight="350" MinWidth="650" Height="0" Width="0" >
+        Title="Einstellungen" MinHeight="350" MinWidth="650" Height="0" Width="0" Loaded="Base4Windows_Loaded" >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10" />
@@ -45,6 +45,7 @@
                     </Grid.RowDefinitions>
 
                     <CheckBox Name="beimStartKontoOeffnen" Content="Beim Start zuletzt geöffnete Kategorie öffnen" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <CheckBox Name="zeigeGesamtBetrag" Content="Gesamtbetrag anzeigen" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" />
                 </Grid>
 			</GroupBox>
 			

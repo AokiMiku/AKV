@@ -24,16 +24,6 @@
 		public Einstellungen()
 		{
 			InitializeComponent();
-
-			this.beimStartKontoOeffnen.IsChecked = UserSettings.BeimStartKontoOeffnen;
-			this.unterKontenAktiv.IsChecked = UserSettings.UnterKonten;
-			if (this.unterKontenAktiv.IsChecked == true)
-			{
-				this.kostenPerUnterKonto.IsEnabled = true;
-				this.unterKontoSummieren.IsEnabled = true;
-			}
-			this.kostenPerUnterKonto.IsChecked = UserSettings.KostenPerUnterKonto;
-			this.unterKontoSummieren.IsChecked = UserSettings.UnterKontoSummieren;
 		}
 
 		private void unterKontenAktiv_Click(object sender, RoutedEventArgs e)
@@ -53,6 +43,7 @@
 		private void speichern_Click(object sender, RoutedEventArgs e)
 		{
 			UserSettings.BeimStartKontoOeffnen = this.beimStartKontoOeffnen.IsChecked == true;
+			UserSettings.ZeigeGesamtBetrag = this.zeigeGesamtBetrag.IsChecked == true;
 			UserSettings.UnterKonten = this.unterKontenAktiv.IsChecked == true;
 			UserSettings.KostenPerUnterKonto = this.kostenPerUnterKonto.IsChecked == true;
 			UserSettings.UnterKontoSummieren = this.unterKontoSummieren.IsChecked == true;
@@ -65,6 +56,20 @@
 		{
 			this.DialogResult = false;
 			this.Close();
+		}
+
+		private void Base4Windows_Loaded(object sender, RoutedEventArgs e)
+		{
+			this.beimStartKontoOeffnen.IsChecked = UserSettings.BeimStartKontoOeffnen;
+			this.zeigeGesamtBetrag.IsChecked = UserSettings.ZeigeGesamtBetrag;
+			this.unterKontenAktiv.IsChecked = UserSettings.UnterKonten;
+			if (this.unterKontenAktiv.IsChecked == true)
+			{
+				this.kostenPerUnterKonto.IsEnabled = true;
+				this.unterKontoSummieren.IsEnabled = true;
+			}
+			this.kostenPerUnterKonto.IsChecked = UserSettings.KostenPerUnterKonto;
+			this.unterKontoSummieren.IsChecked = UserSettings.UnterKontoSummieren;
 		}
 	}
 }

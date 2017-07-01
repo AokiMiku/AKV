@@ -47,6 +47,10 @@
 			{
 				this.core.UpdateDatabase(Versionen.Version06_1);
 			}
+			if (!Core.CoreSettings.GetSetting("Version07Updated").ToBoolean())
+			{
+				this.core.UpdateDatabase(Versionen.Version07);
+			}
 		}
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -113,12 +117,19 @@
 				this.ActualizeUnterKonten();
 			}
 
+			if (UserSettings.ZeigeGesamtBetrag && this.konten.SelectedItem != null)
+			{
+				this.gesBetragContainer.Visibility = Visibility.Visible;
+			}
+			else
+			{
+				this.gesBetragContainer.Visibility = Visibility.Collapsed;
+			}
+
 			if (this.konten.SelectedItem != null)
 			{
 				this.verblBetrag.Visibility = Visibility.Visible;
 				this.betrag.Visibility = Visibility.Visible;
-				this.gesBetrag.Visibility = Visibility.Visible;
-				this.gesamtBetrag.Visibility = Visibility.Visible;
 				this.editKonto.IsEnabled = true;
 				this.delKonto.IsEnabled = true;
 				Core.KontoCore kontoCore = new Core.KontoCore();
@@ -199,10 +210,8 @@
 				this.delUnterKonto.IsEnabled = false;
 				this.kosten.ItemsSource = null;
 				this.addKosten.IsEnabled = false;
-				this.verblBetrag.Visibility = Visibility.Hidden;
-				this.betrag.Visibility = Visibility.Hidden;
-				this.gesBetrag.Visibility = Visibility.Hidden;
-				this.gesamtBetrag.Visibility = Visibility.Hidden;
+				this.verblBetrag.Visibility = Visibility.Collapsed;
+				this.betrag.Visibility = Visibility.Collapsed;
 			}
 		}
 

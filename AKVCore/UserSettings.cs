@@ -27,6 +27,12 @@
 			get { return Core.CoreSettings.GetSetting("LetzterStartAm").ToDateTime(); }
 			set { Core.CoreSettings.SetSetting("LetzterStartAm", value); }
 		}
+
+		public static bool ZeigeGesamtBetrag
+		{
+			get { return Core.CoreSettings.GetSetting("ZeigeGesamtBetrag").ToBoolean(); }
+			set { Core.CoreSettings.SetSetting("ZeigeGesamtBetrag", value); }
+		}
 		#endregion Allgemein
 
 		#region UnterKonten
