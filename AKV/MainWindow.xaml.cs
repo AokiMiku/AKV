@@ -107,11 +107,11 @@
 
 		private void Actualize()
 		{
-			if (!UserSettings.UnterKonten && this.frontend.RowDefinitions[1].Height == new GridLength(50))
+			if (!UserSettings.UnterKonten)
 			{
 				this.frontend.RowDefinitions[1].Height = new GridLength(0);
 			}
-			else if (this.frontend.RowDefinitions[1].Height == new GridLength(0))
+			else
 			{
 				this.frontend.RowDefinitions[1].Height = new GridLength(50);
 				this.ActualizeUnterKonten();
@@ -381,7 +381,8 @@
 			Einstellungen einstellungen = new Einstellungen();
 			einstellungen.ShowDialog();
 
-			this.Actualize();
+			if (einstellungen.DialogResult == true)
+				this.Actualize();
 		}
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

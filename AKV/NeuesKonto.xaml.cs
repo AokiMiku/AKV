@@ -133,5 +133,31 @@
 			else
 				return "";
 		}
+
+		private void Controls_KeyUp(object sender, KeyEventArgs e)
+		{
+			if (sender is DatePicker && e.Key != Key.Enter)
+			{
+				DatePicker picker = sender as DatePicker;
+
+				if (e.Key.KeyIsNumericOrDecimal())
+					picker.Text = "";
+				if (e.Key == Key.V)
+					picker.SelectedDate = DateTime.Now.AddDays(-2).Date;
+				else if (e.Key == Key.G)
+					picker.SelectedDate = DateTime.Now.AddDays(-1).Date;
+				else if (e.Key == Key.H)
+					picker.SelectedDate = DateTime.Now.Date;
+				else if (e.Key == Key.M)
+					picker.SelectedDate = DateTime.Now.AddDays(1).Date;
+				else if (e.Key == Key.U)
+					picker.SelectedDate = DateTime.Now.AddDays(2).Date;
+			}
+
+			if (!string.IsNullOrEmpty(this.name.Text) && !string.IsNullOrEmpty(this.saldo.Text) && e.Key == Key.Enter)
+			{
+				this.speichern_Click(sender, new RoutedEventArgs());
+			}
+		}
 	}
 }

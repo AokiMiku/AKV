@@ -30,9 +30,9 @@
             </Grid.RowDefinitions>
 
             <Label Content="Bezahlt am: " Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" />
-            <DatePicker Name="bezahltAm" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+            <DatePicker Name="bezahltAm" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" KeyUp="Controls_KeyUp" />
 
-            <DockPanel Grid.Column="1" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <DockPanel Grid.Column="1" Grid.Row="5" HorizontalAlignment="Right" VerticalAlignment="Center" >
                 <Button Name="bezahlen" Content="Bezahlen" Click="bezahlen_Click"/>
                 <Label Width="10" />
                 <Button Name="abbrechen" Content="Abbrechen" Click="abbrechen_Click"/>

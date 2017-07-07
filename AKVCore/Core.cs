@@ -83,7 +83,7 @@
 					v07.ErrorOccured += VersionenErrorOccured;
 					v07.RunStatements();
 					v07.ErrorOccured -= VersionenErrorOccured;
-					CoreSettings.SetSetting("Version06_1Updated", true);
+					CoreSettings.SetSetting("Version07Updated", true);
 					break;
 				default:
 					break;
@@ -295,6 +295,7 @@
 			public bool Einnahme = false;
 			public string Notiz = "";
 			public int UnterKonto_Nr = -1;
+			public IntervallEinheiten IntervallEinheit;
 
 			public void Add(int konto_nr)
 			{
@@ -320,6 +321,7 @@
 				kosten.Bezeichnung = this.Bezeichnung;
 				kosten.Betrag = this.Betrag;
 				kosten.Intervall = this.Intervall;
+				kosten.IntervallEinheit = (int)IntervallEinheit;
 				kosten.LaufzeitBis = this.LaufzeitBis;
 				kosten.Einnahme = this.Einnahme;
 				kosten.Notiz = this.Notiz;
@@ -482,6 +484,7 @@
 				kosten.BezahltAm = this.BezahltAm;
 				kosten.LaufzeitBis = this.LaufzeitBis;
 				kosten.Intervall = this.Intervall;
+				kosten.IntervallEinheit = (int)IntervallEinheit;
 				kosten.Bezahlt = this.Bezahlt;
 				if (string.IsNullOrEmpty(this.Notiz))
 					kosten.Notiz = null;
@@ -527,6 +530,78 @@
 			}
 		}
 
+		public static class Initializer
+		{
+			public static event EventHandler<ProgressEventArgs> ProgressChanged;
+			private static int progressMaxValue = 0;
+			private static int progressCurrentValue = 0;
+
+			public static void SetAllAsIntervall()
+			{
+				Kosten kosten = new Kosten();
+				kosten.Where = "Intervall <> -1";
+				kosten.Read();
+
+				if (!kosten.EoF)
+				{
+					progressMaxValue = kosten.RecordCount;
+
+					while (!kosten.EoF)
+					{
+						IntervallEinheiten einheit = (IntervallEinheiten)kosten.IntervallEinheit;
+
+						switch (einheit)
+						{
+							case IntervallEinheiten.AlleXTage:
+								if (kosten.LaufzeitBis != ApS.Settings.NullDate && kosten.LaufzeitBis.AddDays(kosten.Intervall) < DateTime.Now)
+								{
+
+								}
+								break;
+							case IntervallEinheiten.AlleXWochen:
+								break;
+							case IntervallEinheiten.AlleXMonate:
+								break;
+							case IntervallEinheiten.AlleXJahre:
+								break;
+							case IntervallEinheiten.Januar:
+								break;
+							case IntervallEinheiten.Februar:
+								break;
+							case IntervallEinheiten.März:
+								break;
+							case IntervallEinheiten.April:
+								break;
+							case IntervallEinheiten.Mai:
+								break;
+							case IntervallEinheiten.Juni:
+								break;
+							case IntervallEinheiten.Juli:
+								break;
+							case IntervallEinheiten.August:
+								break;
+							case IntervallEinheiten.September:
+								break;
+							case IntervallEinheiten.Oktober:
+								break;
+							case IntervallEinheiten.November:
+								break;
+							case IntervallEinheiten.Dezember:
+								break;
+							case IntervallEinheiten.Null:
+								break;
+							default:
+								break;
+						}
+
+						ProgressChanged?.Invoke(null, new ProgressEventArgs(++progressCurrentValue, progressMaxValue));
+						kosten.Skip();
+					}
+				}
+			}
+		}
+
+
 		#endregion public
 		#region private/protected
 
@@ -539,6 +614,18 @@
 		public ErrorEventArgs(string errorMsg) : base(errorMsg)
 		{
 
+		}
+	}
+
+	public class ProgressEventArgs : EventArgs
+	{
+		public int ProgressMaxValue { get; protected set; }
+		public int ProgressCurrentValue { get; protected set; }
+
+		public ProgressEventArgs(int ProgressCurrentValue, int ProgressMaxValue)
+		{
+			this.ProgressCurrentValue = ProgressCurrentValue;
+			this.ProgressMaxValue = ProgressMaxValue;
 		}
 	}
 

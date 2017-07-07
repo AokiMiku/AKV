@@ -93,6 +93,10 @@
 				intervall = -1;
 			}
 
+			IntervallEinheiten einheit = IntervallEinheiten.Null;
+            if (this.intervallEinheiten.SelectedIndex != -1)
+				einheit = (IntervallEinheiten)this.intervallEinheiten.SelectedIndex;
+
 			bezahlt = this.bezahltAm.SelectedDate != null;
 
 			if (bezahlt)
@@ -136,6 +140,7 @@
 			this.kostenCore.Bezeichnung = this.bezeichnung.Text;
 			this.kostenCore.Betrag = betrag;
 			this.kostenCore.Intervall = intervall;
+			this.kostenCore.IntervallEinheit = einheit;
 			this.kostenCore.Bezahlt = bezahlt;
 			this.kostenCore.BezahltAm = bezahltAm;
 			this.kostenCore.LaufzeitBis = laufzeitBis;
@@ -162,6 +167,23 @@
 		{
 			this.kostenCore = new Core.KostenCore();
 			this.konto_nr = konto_nr;
+
+			this.intervallEinheiten.Items.Add(IntervallEinheiten.AlleXTage.EinheitToString());
+			this.intervallEinheiten.Items.Add(IntervallEinheiten.AlleXWochen.EinheitToString());
+			this.intervallEinheiten.Items.Add(IntervallEinheiten.AlleXMonate.EinheitToString());
+			this.intervallEinheiten.Items.Add(IntervallEinheiten.AlleXJahre.EinheitToString());
+			this.intervallEinheiten.Items.Add(IntervallEinheiten.Januar.EinheitToString());
+			this.intervallEinheiten.Items.Add(IntervallEinheiten.Februar.EinheitToString());
+			this.intervallEinheiten.Items.Add(IntervallEinheiten.März.EinheitToString());
+			this.intervallEinheiten.Items.Add(IntervallEinheiten.April.EinheitToString());
+			this.intervallEinheiten.Items.Add(IntervallEinheiten.Mai.EinheitToString());
+			this.intervallEinheiten.Items.Add(IntervallEinheiten.Juni.EinheitToString());
+			this.intervallEinheiten.Items.Add(IntervallEinheiten.Juli.EinheitToString());
+			this.intervallEinheiten.Items.Add(IntervallEinheiten.August.EinheitToString());
+			this.intervallEinheiten.Items.Add(IntervallEinheiten.September.EinheitToString());
+			this.intervallEinheiten.Items.Add(IntervallEinheiten.Oktober.EinheitToString());
+			this.intervallEinheiten.Items.Add(IntervallEinheiten.November.EinheitToString());
+			this.intervallEinheiten.Items.Add(IntervallEinheiten.Dezember.EinheitToString());
 
 			if (!UserSettings.UnterKonten)
 			{
@@ -202,6 +224,8 @@
 				this.betrag.Text = kosten.Betrag.ToString();
 				if (kosten.Intervall != -1)
 					this.intervall.Text = kosten.Intervall.ToString();
+				if (kosten.IntervallEinheit != -1)
+					this.intervallEinheiten.SelectedIndex = kosten.IntervallEinheit;
 				//this.bezahlt.IsChecked = kosten.Bezahlt;
 				if (kosten.BezahltAm != ApS.Settings.NullDate)
 					this.bezahltAm.SelectedDate = kosten.BezahltAm;
@@ -229,6 +253,32 @@
 			this.ShowDialog();
 
 			this.kostenCore.KostenExist -= Core_KostenExist;
+		}
+
+		private void Controls_KeyUp(object sender, KeyEventArgs e)
+		{
+			if (sender is DatePicker)
+			{
+				DatePicker picker = sender as DatePicker;
+				
+				if (e.Key.KeyIsNumericOrDecimal())
+					picker.Text = "";
+				if (e.Key == Key.V)
+					picker.SelectedDate = DateTime.Now.AddDays(-2).Date;
+				else if (e.Key == Key.G)
+					picker.SelectedDate = DateTime.Now.AddDays(-1).Date;
+				else if (e.Key == Key.H)
+					picker.SelectedDate = DateTime.Now.Date;
+				else if (e.Key == Key.M)
+					picker.SelectedDate = DateTime.Now.AddDays(1).Date;
+				else if (e.Key == Key.U)
+					picker.SelectedDate = DateTime.Now.AddDays(2).Date;
+			}
+
+			if (!string.IsNullOrEmpty(this.bezeichnung.Text) && !string.IsNullOrEmpty(this.betrag.Text) && e.Key == Key.Enter)
+			{
+				this.speichern_Click(sender, new RoutedEventArgs());
+			}
 		}
 	}
 }

@@ -39,9 +39,9 @@
 			get { return this.GetInt("INTERVALL"); }
 			set { this.Put("INTERVALL", value); }
 		}
-		public string IntervallEinheit
+		public int IntervallEinheit
 		{
-			get { return this.GetString("INTERVALLEINHEIT"); }
+			get { return this.GetInt("INTERVALLEINHEIT"); }
 			set { this.Put("INTERVALLEINHEIT", value); }
 		}
 		public bool Bezahlt
@@ -84,10 +84,10 @@
 
 	public enum IntervallEinheiten
 	{
-		ProTag,
-		ProWoche,
-		ProMonat,
-		ProJahr,
+		AlleXTage,
+		AlleXWochen,
+		AlleXMonate,
+		AlleXJahre,
 		Januar,
 		Februar,
 		März,
@@ -99,6 +99,50 @@
 		September,
 		Oktober,
 		November,
-		Dezember
+		Dezember,
+		Null
+	}
+	public static class IntervallEinheitenExtensions
+	{
+		public static string EinheitToString(this IntervallEinheiten einheit)
+		{
+			switch (einheit)
+			{
+				case IntervallEinheiten.AlleXTage:
+					return "Alle X Tage";
+				case IntervallEinheiten.AlleXWochen:
+					return "Alle X Wochen";
+				case IntervallEinheiten.AlleXMonate:
+					return "Alle X Monate";
+				case IntervallEinheiten.AlleXJahre:
+					return "Alle X Jahre";
+				case IntervallEinheiten.Januar:
+					return ". Januar";
+				case IntervallEinheiten.Februar:
+					return ". Februar";
+				case IntervallEinheiten.März:
+					return ". März";
+				case IntervallEinheiten.April:
+					return ". April";
+				case IntervallEinheiten.Mai:
+					return ". Mai";
+				case IntervallEinheiten.Juni:
+					return ". Juni";
+				case IntervallEinheiten.Juli:
+					return ". Juli";
+				case IntervallEinheiten.August:
+					return ". August";
+				case IntervallEinheiten.September:
+					return ". September";
+				case IntervallEinheiten.Oktober:
+					return ". Oktober";
+				case IntervallEinheiten.November:
+					return ". November";
+				case IntervallEinheiten.Dezember:
+					return ". Dezember";
+				default:
+					return "";
+			}
+		}
 	}
 }
