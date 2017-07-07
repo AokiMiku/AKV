@@ -81,4 +81,24 @@
 		}
 		#endregion DbZugriffe
 	}
+
+	public enum IntervallEinheiten
+	{
+		ProTag,
+		ProWoche,
+		ProMonat,
+		ProJahr,
+		Januar,
+		Februar,
+		März,
+		April,
+		Mai,
+		Juni,
+		Juli,
+		August,
+		September,
+		Oktober,
+		November,
+		Dezember
+	}
 }
