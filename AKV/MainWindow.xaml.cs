@@ -55,6 +55,10 @@
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
+			Initializer init = new Initializer();
+			init.Top = (this.Top + this.Height / 2) - 50;
+			init.Left = (this.Left + this.Width / 2) - 250;
+			init.ShowDialog();
 			this.ActualizeKonten();
 			this.Actualize();
 
@@ -220,9 +224,11 @@
 			if (!this.kosten.HasItems || this.kosten.SelectedItem == null)
 				return;
 
-			new KostensatzBezahlen().Start(((Kosten4Table)this.kosten.SelectedItem).Nummer);
+			KostensatzBezahlen bez = new KostensatzBezahlen();
+			bez.Start(((Kosten4Table)this.kosten.SelectedItem).Nummer);
 
-			this.Actualize();
+			if (bez.DialogResult == true)
+				this.Actualize();
 		}
 
 		private void kosten_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -256,19 +262,27 @@
 
 		private void addKonto_Click(object sender, RoutedEventArgs e)
 		{
-			string name = new NeuesKonto().Start();
+			NeuesKonto kont = new NeuesKonto();
+			string name = kont.Start();
 
-			this.ActualizeKonten();
-			this.konten.SelectedItem = name;
+			if (kont.DialogResult == true)
+			{
+				this.ActualizeKonten();
+				this.konten.SelectedItem = name;
+			}
 		}
 
 		private void editKonto_Click(object sender, RoutedEventArgs e)
 		{
 			int i = this.konten.SelectedIndex;
-			new NeuesKonto().Start(this.currentKonto_nr);
+			NeuesKonto kont = new NeuesKonto();
+			kont.Start(this.currentKonto_nr);
 
-			this.ActualizeKonten();
-			this.konten.SelectedIndex = i;
+			if (kont.DialogResult == true)
+			{
+				this.ActualizeKonten();
+				this.konten.SelectedIndex = i;
+			}
 		}
 
 		private void delKonto_Click(object sender, RoutedEventArgs e)
@@ -288,16 +302,20 @@
 
 		private void addKosten_Click(object sender, RoutedEventArgs e)
 		{
-			new NeuerKostensatz().Start(this.currentKonto_nr, uKonto_nr: this.currentUnterKonto_nr);
+			NeuerKostensatz kost = new NeuerKostensatz();
+			kost.Start(this.currentKonto_nr, uKonto_nr: this.currentUnterKonto_nr);
 
-			this.Actualize();
+			if (kost.DialogResult == true)
+				this.Actualize();
 		}
 
 		private void editKosten_Click(object sender, RoutedEventArgs e)
 		{
-			new NeuerKostensatz().Start(this.currentKonto_nr, ((Kosten4Table)this.kosten.SelectedItem).Nummer, this.currentUnterKonto_nr);
+			NeuerKostensatz kost = new NeuerKostensatz();
+			kost.Start(this.currentKonto_nr, ((Kosten4Table)this.kosten.SelectedItem).Nummer, this.currentUnterKonto_nr);
 
-			this.Actualize();
+			if (kost.DialogResult == true)
+				this.Actualize();
 		}
 
 		private void delKosten_Click(object sender, RoutedEventArgs e)
@@ -319,22 +337,30 @@
 
 		private void addUnterKonto_Click(object sender, RoutedEventArgs e)
 		{
-			string name = new NeuesUnterKonto().Start(this.currentKonto_nr);
+			NeuesUnterKonto kont = new NeuesUnterKonto();
+			string name = kont.Start(this.currentKonto_nr);
 
-			int i = this.konten.SelectedIndex;
-			this.ActualizeKonten();
-			this.konten.SelectedIndex = i;
-			this.ActualizeUnterKonten();
-			this.unterKonten.SelectedItem = name;
+			if (kont.DialogResult == true)
+			{
+				int i = this.konten.SelectedIndex;
+				this.ActualizeKonten();
+				this.konten.SelectedIndex = i;
+				this.ActualizeUnterKonten();
+				this.unterKonten.SelectedItem = name;
+			}
 		}
 
 		private void editUnterKonto_Click(object sender, RoutedEventArgs e)
 		{
 			int i = this.unterKonten.SelectedIndex;
-			new NeuesUnterKonto().Start(this.currentKonto_nr, this.currentUnterKonto_nr);
+			NeuesUnterKonto kont = new NeuesUnterKonto();
+			kont.Start(this.currentKonto_nr, this.currentUnterKonto_nr);
 
-			this.ActualizeUnterKonten();
-			this.unterKonten.SelectedIndex = i;
+			if (kont.DialogResult == true)
+			{
+				this.ActualizeUnterKonten();
+				this.unterKonten.SelectedIndex = i;
+			}
 		}
 
 		private void delUnterKonto_Click(object sender, RoutedEventArgs e)

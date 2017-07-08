@@ -60,6 +60,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Initializer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="KostensatzBezahlen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -75,6 +79,9 @@
     <Compile Include="Base4Windows.cs" />
     <Compile Include="Einstellungen.xaml.cs">
       <DependentUpon>Einstellungen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Initializer.xaml.cs">
+      <DependentUpon>Initializer.xaml</DependentUpon>
     </Compile>
     <Compile Include="KostensatzBezahlen.xaml.cs">
       <DependentUpon>KostensatzBezahlen.xaml</DependentUpon>

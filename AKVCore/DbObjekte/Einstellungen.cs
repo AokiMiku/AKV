@@ -39,11 +39,9 @@
 			this.SettingValue = value;
 
 			if (this.EoF)
-				this.BuildSaveStmt(SqlAction.Insert);
+				this.Save(SqlAction.Insert);
 			else
-				this.BuildSaveStmt(SqlAction.Update);
-
-			this.SaveStmtsOnly();
+				this.Save(SqlAction.Update);
 		}
 
 		public void SetSetting(string key, bool value)

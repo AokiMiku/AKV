@@ -96,7 +96,7 @@
 		}
 
 		public class KontoCore : Core
-		{ 
+		{
 			public string Name = "";
 			public decimal Saldo = 0;
 			public decimal Gebuehren = 0;
@@ -433,7 +433,7 @@
 				kosten.Save(SqlAction.Delete);
 
 			}
-			
+
 			public void Edit(int kosten_nr)
 			{
 				Kosten kosten = new Kosten();
@@ -533,71 +533,91 @@
 		public static class Initializer
 		{
 			public static event EventHandler<ProgressEventArgs> ProgressChanged;
-			private static int progressMaxValue = 0;
-			private static int progressCurrentValue = 0;
+			public static event EventHandler<EventArgs> InitilizationFinished;
 
 			public static void SetAllAsIntervall()
 			{
 				Kosten kosten = new Kosten();
-				kosten.Where = "Intervall <> -1";
+				kosten.Where = "Intervall <> -1 AND LaufzeitBis <= '" + DateTime.Now.ToShortDateString() + "'";
 				kosten.Read();
 
 				if (!kosten.EoF)
 				{
-					progressMaxValue = kosten.RecordCount;
+					int progressCurrentValue = 0;
+					ProgressChanged?.Invoke(null, new ProgressEventArgs(progressCurrentValue, kosten.RecordCount));
 
 					while (!kosten.EoF)
 					{
-						IntervallEinheiten einheit = (IntervallEinheiten)kosten.IntervallEinheit;
-
-						switch (einheit)
+						if (!IsIntervallSet(kosten.Nummer))
 						{
-							case IntervallEinheiten.AlleXTage:
-								if (kosten.LaufzeitBis != ApS.Settings.NullDate && kosten.LaufzeitBis.AddDays(kosten.Intervall) < DateTime.Now)
-								{
+							kosten.Bezeichnung = kosten.Bezeichnung;
+							kosten.Betrag = kosten.Betrag;
+							kosten.Intervall = kosten.Intervall;
+							kosten.IntervallEinheit = kosten.IntervallEinheit;
+							kosten.Konto_Nr = kosten.Konto_Nr;
+							kosten.Einnahme = kosten.Einnahme;
+							if (kosten.UnterKonto_Nr != 0)
+								kosten.UnterKonto_Nr = kosten.UnterKonto_Nr;
+							kosten.Bezahlt = false;
+							kosten.BezahltAm = ApS.Settings.NullDate;
+							kosten.Notiz = "Automatische Verlängerung vom System aufgrund eines gesetzten Intervalls.";
 
-								}
-								break;
-							case IntervallEinheiten.AlleXWochen:
-								break;
-							case IntervallEinheiten.AlleXMonate:
-								break;
-							case IntervallEinheiten.AlleXJahre:
-								break;
-							case IntervallEinheiten.Januar:
-								break;
-							case IntervallEinheiten.Februar:
-								break;
-							case IntervallEinheiten.März:
-								break;
-							case IntervallEinheiten.April:
-								break;
-							case IntervallEinheiten.Mai:
-								break;
-							case IntervallEinheiten.Juni:
-								break;
-							case IntervallEinheiten.Juli:
-								break;
-							case IntervallEinheiten.August:
-								break;
-							case IntervallEinheiten.September:
-								break;
-							case IntervallEinheiten.Oktober:
-								break;
-							case IntervallEinheiten.November:
-								break;
-							case IntervallEinheiten.Dezember:
-								break;
-							case IntervallEinheiten.Null:
-								break;
-							default:
-								break;
+							IntervallEinheiten einheit = (IntervallEinheiten)kosten.IntervallEinheit;
+							switch (einheit)
+							{
+								case IntervallEinheiten.AlleXTage:
+									kosten.LaufzeitBis = kosten.LaufzeitBis.AddDays(kosten.Intervall);
+									break;
+								case IntervallEinheiten.AlleXWochen:
+									kosten.LaufzeitBis = kosten.LaufzeitBis.AddDays(kosten.Intervall * 7);
+									break;
+								case IntervallEinheiten.AlleXMonate:
+									kosten.LaufzeitBis = kosten.LaufzeitBis.AddMonths(kosten.Intervall);
+									break;
+								case IntervallEinheiten.AlleXJahre:
+									kosten.LaufzeitBis = kosten.LaufzeitBis.AddYears(kosten.Intervall);
+									break;
+								case IntervallEinheiten.Januar:
+								case IntervallEinheiten.Februar:
+								case IntervallEinheiten.März:
+								case IntervallEinheiten.April:
+								case IntervallEinheiten.Mai:
+								case IntervallEinheiten.Juni:
+								case IntervallEinheiten.Juli:
+								case IntervallEinheiten.August:
+								case IntervallEinheiten.September:
+								case IntervallEinheiten.Oktober:
+								case IntervallEinheiten.November:
+								case IntervallEinheiten.Dezember:
+									kosten.LaufzeitBis = new DateTime(kosten.LaufzeitBis.AddYears(1).Year, (int)einheit - 3, kosten.Intervall);
+									break;
+								case IntervallEinheiten.Null:
+									break;
+								default:
+									break;
+							}
+							kosten.Save(SqlAction.Insert);
+							SetIntervall(kosten.Nummer);
 						}
-
-						ProgressChanged?.Invoke(null, new ProgressEventArgs(++progressCurrentValue, progressMaxValue));
+						ProgressChanged?.Invoke(null, new ProgressEventArgs(++progressCurrentValue, kosten.RecordCount));
 						kosten.Skip();
 					}
+
 				}
+				InitilizationFinished?.Invoke(null, new EventArgs());
+			}
+
+			private static bool IsIntervallSet(int kosten_nr)
+			{
+				if (CoreSettings.GetSetting("Intervall_" + kosten_nr).ToBoolean())
+					return true;
+				else
+					return false;
+			}
+
+			private static void SetIntervall(int kosten_nr)
+			{
+				CoreSettings.SetSetting("Intervall_" + kosten_nr, true);
 			}
 		}
 

@@ -26,6 +26,10 @@
 		public NeuesKonto()
 		{
 			InitializeComponent();
+
+			this.frontend.RowDefinitions[2].Height = new GridLength(0);
+			this.frontend.RowDefinitions[3].Height = new GridLength(0);
+			this.frontend.RowDefinitions[4].Height = new GridLength(0);
 		}
 
 		private void speichern_Click(object sender, RoutedEventArgs e)
