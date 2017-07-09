@@ -21,7 +21,7 @@
 	/// </summary>
 	public partial class Einstellungen : Base4Windows
 	{
-		public Einstellungen()
+		public Einstellungen(Window parent) : base(parent)
 		{
 			InitializeComponent();
 		}

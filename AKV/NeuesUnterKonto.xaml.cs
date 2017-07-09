@@ -24,7 +24,8 @@
 		int unterKonto_nr;
 		int konto_nr;
         Core.UnterKontoCore kontoCore;
-		public NeuesUnterKonto()
+
+		public NeuesUnterKonto(Window parent) : base(parent)
 		{
 			InitializeComponent();
 		}

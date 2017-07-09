@@ -538,7 +538,7 @@
 			public static void SetAllAsIntervall()
 			{
 				Kosten kosten = new Kosten();
-				kosten.Where = "Intervall <> -1 AND LaufzeitBis <= '" + DateTime.Now.ToShortDateString() + "'";
+				kosten.Where = "Intervall <> -1 AND LaufzeitBis >= '" + DateTime.Now.ToShortDateString() + "' AND Bezahlt = 1";
 				kosten.Read();
 
 				if (!kosten.EoF)

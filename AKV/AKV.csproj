@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Icons\AKV.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -152,6 +155,17 @@
       <Project>{a28b712a-7e21-4abb-bd82-fcc143a24933}</Project>
       <Name>AKVCore</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\add.ico" />
+    <Resource Include="Resources\Icons\del.ico" />
+    <Resource Include="Resources\Icons\edit.ico" />
+    <Resource Include="Resources\Icons\AKV.ico" />
+    <Resource Include="Resources\Icons\ApS.ico" />
+    <Resource Include="Resources\Icons\cancel.ico" />
+    <Resource Include="Resources\Icons\save.ico" />
+    <Resource Include="Resources\Icons\check.ico" />
+    <Resource Include="Resources\Icons\wheel.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

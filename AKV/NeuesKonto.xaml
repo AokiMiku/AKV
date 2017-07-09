@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AKV"
         mc:Ignorable="d"
-        Title="Neues Konto" MinHeight="250" MinWidth="300" Height="0" Width="0">
+        Title="Neues Konto" MinHeight="150" MinWidth="300" Height="0" Width="0">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10" />
@@ -43,10 +43,22 @@
             <TextBox Name="zinsenPA" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" KeyUp="Controls_KeyUp" />
             <Label Content="Dispo p.a.: " Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Center" />
             <TextBox Name="dispoPA" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Center" KeyUp="Controls_KeyUp" />
-            <DockPanel Grid.Column="1" Grid.Row="5" HorizontalAlignment="Right" VerticalAlignment="Center" >
-                <Button Name="speichern" Content="Speichern" Click="speichern_Click"/>
+            <DockPanel Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" Height="23" >
+                <Button Name="speichern" Click="speichern_Click" >
+                    <DockPanel>
+                        <Image Source="Resources/Icons/save.ico" />
+                        <Label Width="3" />
+                        <TextBlock Text="Speichern" />
+                    </DockPanel>
+                </Button>
                 <Label Width="10" />
-                <Button Name="abbrechen" Content="Abbrechen" Click="abbrechen_Click"/>
+                <Button Name="abbrechen" Click="abbrechen_Click" >
+                    <DockPanel>
+                        <Image Source="Resources/Icons/cancel.ico" />
+                        <Label Width="3" />
+                        <TextBlock Text="Abbrechen" />
+                    </DockPanel>
+                </Button>
             </DockPanel>
 
         </Grid>

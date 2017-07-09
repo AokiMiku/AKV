@@ -26,7 +26,7 @@
 		int kosten_nr = 0;
 		Core.KostenCore kostenCore;
 
-		public NeuerKostensatz()
+		public NeuerKostensatz(Window parent) : base(parent)
 		{
 			InitializeComponent();
 		}

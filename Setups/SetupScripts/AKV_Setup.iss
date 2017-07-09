@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "ApS KostenVerwaltung"
-#define MyAppVersion "0.6.2"
+#define MyAppVersion "0.7"
 #define MyAppPublisher "ApS Industries"
 #define MyAppExeName "AKV.exe"
 
@@ -13,7 +13,7 @@
 AppId={{82653175-8278-4FBB-821C-6867DE72963C}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
-;AppVerName={#MyAppName} {#MyAppVersion}
+AppVerName={#MyAppName}
 AppPublisher={#MyAppPublisher}
 DefaultDirName={pf}\AKV
 DisableProgramGroupPage=yes
@@ -22,6 +22,8 @@ OutputDir=C:\Users\Kenji Kerman\Documents\Proggen\CSharp\AKV\Setups\{#MyAppVersi
 OutputBaseFilename=AKV_{#MyAppVersion}
 Compression=lzma
 SolidCompression=yes
+SetupIconFile=AKV.ico
+UninstallDisplayIcon={app}\AKV.exe
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -39,6 +41,7 @@ Source: "ApS.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "ApS.Firebird.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "AKV.exe.config"; DestDir: "{app}"; Flags: ignoreversion
 Source: "firebird\*"; DestDir: "{app}\firebird"; Flags: ignoreversion
+Source: "AKV.ico"; Flags: dontcopy
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [UninstallDelete]

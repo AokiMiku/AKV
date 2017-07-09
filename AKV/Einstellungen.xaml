@@ -63,12 +63,24 @@
                 </TabItem>
             </TabControl>
 
-            <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center">
                 <Label Height="10" />
-                <DockPanel>
-                    <Button Name="speichern" Content="Speichern" Click="speichern_Click" />
+                <DockPanel Height="23" >
+                    <Button Name="speichern" Click="speichern_Click" >
+                        <DockPanel>
+                            <Image Source="Resources/Icons/save.ico" />
+                            <Label Width="3" />
+                            <TextBlock Text="Speichern" />
+                        </DockPanel>
+                    </Button>
                     <Label Width="10" />
-                    <Button Name="abbrechen" Content="Abbrechen" Click="abbrechen_Click" />
+                    <Button Name="abbrechen" Click="abbrechen_Click" >
+                        <DockPanel>
+                            <Image Source="Resources/Icons/cancel.ico" />
+                            <Label Width="3" />
+                            <TextBlock Text="Abbrechen" />
+                        </DockPanel>
+                    </Button>
                 </DockPanel>
             </StackPanel>
             

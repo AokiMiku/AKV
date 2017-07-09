@@ -17,6 +17,8 @@
 		private bool einnahme;
 		private string notiz;
 		private int unterKonto_nr;
+		private int intervall;
+		private IntervallEinheiten einheit;
 		public int Nummer
 		{
 			get { return this.nummer; }
@@ -56,6 +58,36 @@
 				return this.bezahlenBis;
 			}
 			private set { this.bezahlenBis = value; }
+		}
+		public string Intervall
+		{
+			get
+			{
+				switch (this.einheit)
+				{
+					case IntervallEinheiten.AlleXTage:
+					case IntervallEinheiten.AlleXWochen:
+					case IntervallEinheiten.AlleXMonate:
+					case IntervallEinheiten.AlleXJahre:
+						return this.einheit.EinheitToString().Replace(" X ", " " + this.intervall + " ");
+					case IntervallEinheiten.Januar:
+					case IntervallEinheiten.Februar:
+					case IntervallEinheiten.März:
+					case IntervallEinheiten.April:
+					case IntervallEinheiten.Mai:
+					case IntervallEinheiten.Juni:
+					case IntervallEinheiten.Juli:
+					case IntervallEinheiten.August:
+					case IntervallEinheiten.September:
+					case IntervallEinheiten.Oktober:
+					case IntervallEinheiten.November:
+					case IntervallEinheiten.Dezember:
+						return this.intervall + this.einheit.EinheitToString();
+					case IntervallEinheiten.Null:
+					default:
+						return "";
+				}
+			}
 		}
 		public string Art
 		{
@@ -103,6 +135,8 @@
 			this.einnahme = kosten.Einnahme || kosten.Betrag.ToString().StartsWith("-"); //für Daten, die erfasst wurden vor Version 0.5, auf - prüfen
 			this.Notiz = kosten.Notiz;
 			this.unterKonto_nr = kosten.UnterKonto_Nr;
+			this.intervall = kosten.Intervall;
+			this.einheit = (IntervallEinheiten)kosten.IntervallEinheit;
 		}
 	}
 }

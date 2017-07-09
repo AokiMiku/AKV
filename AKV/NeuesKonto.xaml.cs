@@ -23,7 +23,7 @@
 	{
 		int konto_nr;
 		Core.KontoCore kontoCore;
-		public NeuesKonto()
+		public NeuesKonto(Window parent) : base(parent)
 		{
 			InitializeComponent();
 

@@ -4,7 +4,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AKV"
         mc:Ignorable="d"
         Title="ApS KostenVerwaltung" MinHeight="400" MinWidth="550" Height="0" Width="0" Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid>
@@ -39,24 +38,42 @@
 
             <Label Content="Kategorie:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
             <ComboBox Name="konten" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectionChanged="konten_SelectionChanged" />
-			<Button Name="einstellungen" Content="Einstellungen" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="einstellungen_Click" />
-			<Label Content="Unter-Kategorie:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" />
+            <Button Name="einstellungen" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="einstellungen_Click" Height="23" >
+                <DockPanel>
+                    <Image Source="Resources/Icons/wheel.ico" />
+                    <Label Width="3" />
+                    <TextBlock Text="Einstellungen" />
+                </DockPanel>
+            </Button>
             <DockPanel Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" >
                 <Label Width="3" />
-                <Button Name="addKonto" Content="+" Width="20" Click="addKonto_Click"/>
+                <Button Name="addKonto" Width="20" Click="addKonto_Click" >
+                    <Image Source="Resources/Icons/add.ico" />
+				</Button>
                 <Label Width="3" />
-                <Button Name="editKonto" Content="E" Width="20" IsEnabled="False" Click="editKonto_Click"/>
+                <Button Name="editKonto" Width="20" IsEnabled="False" Click="editKonto_Click" >
+                    <Image Source="Resources/Icons/edit.ico" />
+				</Button>
                 <Label Width="3" />
-                <Button Name="delKonto" Content="-" Width="20" IsEnabled="False" Click="delKonto_Click"/>
+                <Button Name="delKonto" Width="20" IsEnabled="False" Click="delKonto_Click" >
+                    <Image Source="Resources/Icons/del.ico" />
+                </Button>
             </DockPanel>
+			<Label Content="Unter-Kategorie:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" />
             <ComboBox Name="unterKonten" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectionChanged="unterKonten_SelectionChanged" />
             <DockPanel Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" >
                 <Label Width="3" />
-                <Button Name="addUnterKonto" Content="+" Width="20" Click="addUnterKonto_Click"/>
+                <Button Name="addUnterKonto" Width="20" Click="addUnterKonto_Click" >
+                    <Image Source="Resources/Icons/add.ico" />
+                </Button>
                 <Label Width="3" />
-                <Button Name="editUnterKonto" Content="E" Width="20" IsEnabled="False" Click="editUnterKonto_Click"/>
+                <Button Name="editUnterKonto" Width="20" IsEnabled="False" Click="editUnterKonto_Click" >
+                    <Image Source="Resources/Icons/edit.ico" />
+                </Button>
                 <Label Width="3" />
-                <Button Name="delUnterKonto" Content="-" Width="20" IsEnabled="False" Click="delUnterKonto_Click"/>
+                <Button Name="delUnterKonto" Width="20" IsEnabled="False" Click="delUnterKonto_Click" >
+                    <Image Source="Resources/Icons/del.ico" />
+                </Button>
             </DockPanel>
             <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" >
                 <DockPanel Name="gesBetragContainer">
@@ -68,21 +85,42 @@
                     <Label Name="betrag"  Content="XXX" HorizontalAlignment="Right" VerticalAlignment="Center" />
                 </DockPanel>				
             </StackPanel>
-            <Button Name="addKosten" Content="Hinzufügen" IsEnabled="False" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Click="addKosten_Click"/>
-            <Button Name="editKosten" Content="Editieren" IsEnabled="False" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Click="editKosten_Click"/>
-            <Button Name="delKosten" Content="Löschen" IsEnabled="False" Grid.Column="2" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Click="delKosten_Click"/>
-            <Button Name="kostenBezahlen" Content="Bezahlen" IsEnabled="False" Grid.Column="3" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Click="kostenBezahlen_Click"/>
+            <DockPanel Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="4" Height="23" >
+                <Button Name="addKosten" IsEnabled="False" Click="addKosten_Click" >
+                    <DockPanel>
+                        <Image Source="Resources/Icons/add.ico" />
+						<Label Width="3" />
+						<TextBlock Text="Hinzufügen" />
+                    </DockPanel>
+				</Button>
+				<Label Width="10" />
+                <Button Name="editKosten" IsEnabled="False" Click="editKosten_Click" >
+                    <DockPanel>
+                        <Image Source="Resources/Icons/edit.ico" />
+                        <Label Width="3" />
+                        <TextBlock Text="Editieren" />
+                    </DockPanel>
+                </Button>
+                <Label Width="10" />
+                <Button Name="delKosten" IsEnabled="False" Click="delKosten_Click" >
+                    <DockPanel>
+                        <Image Source="Resources/Icons/del.ico" />
+                        <Label Width="3" />
+                        <TextBlock Text="Löschen" />
+                    </DockPanel>
+                </Button>
+                <Label Width="10" />
+                <Button Name="kostenBezahlen" IsEnabled="False" Click="kostenBezahlen_Click" >
+                    <DockPanel>
+                        <Image Source="Resources/Icons/check.ico" />
+                        <Label Width="3" />
+                        <TextBlock Text="Bezahlen" />
+                    </DockPanel>
+                </Button>
+            </DockPanel>
+            
 			
             <DataGrid Name="kosten" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" Grid.RowSpan="3" SelectionChanged="kosten_SelectionChanged" LoadingRow="kosten_LoadingRow" />
-            <!--<DataGrid.Columns>
-                <DataGridTextColumn Header="Nummer" Width="Auto" IsReadOnly="True" />
-                <DataGridTextColumn Header="Bezeichnung" Width="Auto" IsReadOnly="True" />
-                <DataGridCheckBoxColumn Header="Bezahlt" Width="Auto" IsReadOnly="True" />
-                <DataGridTextColumn Header="Betrag" Width="AUto" IsReadOnly="True" />
-                <DataGridTextColumn Header="Bezahlt am" Width="Auto" IsReadOnly="True" />
-                <DataGridTextColumn Header="Bezahlen bis" Width="Auto" IsReadOnly="True" />
-            </DataGrid.Columns>-->
-
         </Grid>
     </Grid>
 </src:Base4Windows>

@@ -2,11 +2,18 @@
 {
 	using System;
 	using System.Windows;
+	using System.Windows.Media.Imaging;
 
 	public class Base4Windows : Window
 	{
 		protected AKVCore.Core core = new AKVCore.Core();
 		protected FensterModus modus = FensterModus.Neu;
+		protected Window parent;
+
+		public Base4Windows(Window parent) : this()
+		{
+			this.parent = parent;
+		}
 
 		public Base4Windows()
 		{
@@ -17,6 +24,11 @@
 			Application.Current.DispatcherUnhandledException += UnhandledException;
 
 			AKVCore.Core.ErrorOccured += Core_ErrorOccured;
+			BitmapImage appIcon = new BitmapImage();
+			appIcon.BeginInit();
+			appIcon.UriSource = new Uri("pack://application:,,,/Resources/Icons/AKV.ico");
+			appIcon.EndInit();
+			this.Icon = appIcon;
 		}
 
 		private void Core_ErrorOccured(object sender, AKVCore.ErrorEventArgs e)
@@ -47,7 +59,11 @@
 		{
 			try
 			{
-				this.LadeFensterInformationen();
+				if (!this.LadeFensterInformationen() && parent != null)
+				{
+					this.Top = (parent.Top + parent.Height / 2) - this.Height / 2;
+					this.Left = (parent.Left + parent.Width / 2) - this.Width / 2;
+				}
 			}
 			catch (Exception ex)
 			{

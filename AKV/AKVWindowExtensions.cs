@@ -31,10 +31,10 @@
 			Core.CoreSettings.SetSetting(Fenster.ToString() + "_Position_Y", Fenster.Left.ToString());
 		}
 
-		public static void LadeFensterInformationen(this Window Fenster)
+		public static bool LadeFensterInformationen(this Window Fenster)
 		{
 			Fenster.LadeFensterGroesse();
-			Fenster.LadeFensterPosition();
+			return Fenster.LadeFensterPosition();
 		}
 
 		public static void LadeFensterGroesse(this Window Fenster)
@@ -47,7 +47,7 @@
 				Fenster.Height = Height;
 		}
 
-		public static void LadeFensterPosition(this Window Fenster)
+		public static bool LadeFensterPosition(this Window Fenster)
 		{
 			double Top = 0;
 			double Left = 0;
@@ -55,6 +55,11 @@
 				Fenster.Top = Top;
 			if (double.TryParse(Core.CoreSettings.GetSetting(Fenster.ToString() + "_Position_Y"), out Left))
 				Fenster.Left = Left;
+
+			if (Top == 0 || Left == 0)
+				return false;
+			else
+				return true;
 		}
 
 		public static bool KeyIsNumericOrDecimal(this Key key)

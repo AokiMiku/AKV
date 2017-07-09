@@ -31,6 +31,7 @@
 		public MainWindow()
 		{
 			InitializeComponent();
+
 			if (!Core.CoreSettings.GetSetting("Version02Updated").ToBoolean())
 			{
 				this.core.UpdateDatabase(Versionen.Version02);
@@ -59,6 +60,7 @@
 			init.Top = (this.Top + this.Height / 2) - 50;
 			init.Left = (this.Left + this.Width / 2) - 250;
 			init.ShowDialog();
+
 			this.ActualizeKonten();
 			this.Actualize();
 
@@ -117,8 +119,8 @@
 			}
 			else
 			{
-				this.frontend.RowDefinitions[1].Height = new GridLength(50);
 				this.ActualizeUnterKonten();
+				this.frontend.RowDefinitions[1].Height = new GridLength(50);
 			}
 
 			if (UserSettings.ZeigeGesamtBetrag && this.konten.SelectedItem != null)
@@ -224,7 +226,7 @@
 			if (!this.kosten.HasItems || this.kosten.SelectedItem == null)
 				return;
 
-			KostensatzBezahlen bez = new KostensatzBezahlen();
+			KostensatzBezahlen bez = new KostensatzBezahlen(this);
 			bez.Start(((Kosten4Table)this.kosten.SelectedItem).Nummer);
 
 			if (bez.DialogResult == true)
@@ -262,7 +264,7 @@
 
 		private void addKonto_Click(object sender, RoutedEventArgs e)
 		{
-			NeuesKonto kont = new NeuesKonto();
+			NeuesKonto kont = new NeuesKonto(this);
 			string name = kont.Start();
 
 			if (kont.DialogResult == true)
@@ -275,7 +277,7 @@
 		private void editKonto_Click(object sender, RoutedEventArgs e)
 		{
 			int i = this.konten.SelectedIndex;
-			NeuesKonto kont = new NeuesKonto();
+			NeuesKonto kont = new NeuesKonto(this);
 			kont.Start(this.currentKonto_nr);
 
 			if (kont.DialogResult == true)
@@ -302,7 +304,7 @@
 
 		private void addKosten_Click(object sender, RoutedEventArgs e)
 		{
-			NeuerKostensatz kost = new NeuerKostensatz();
+			NeuerKostensatz kost = new NeuerKostensatz(this);
 			kost.Start(this.currentKonto_nr, uKonto_nr: this.currentUnterKonto_nr);
 
 			if (kost.DialogResult == true)
@@ -311,7 +313,7 @@
 
 		private void editKosten_Click(object sender, RoutedEventArgs e)
 		{
-			NeuerKostensatz kost = new NeuerKostensatz();
+			NeuerKostensatz kost = new NeuerKostensatz(this);
 			kost.Start(this.currentKonto_nr, ((Kosten4Table)this.kosten.SelectedItem).Nummer, this.currentUnterKonto_nr);
 
 			if (kost.DialogResult == true)
@@ -337,7 +339,7 @@
 
 		private void addUnterKonto_Click(object sender, RoutedEventArgs e)
 		{
-			NeuesUnterKonto kont = new NeuesUnterKonto();
+			NeuesUnterKonto kont = new NeuesUnterKonto(this);
 			string name = kont.Start(this.currentKonto_nr);
 
 			if (kont.DialogResult == true)
@@ -353,7 +355,7 @@
 		private void editUnterKonto_Click(object sender, RoutedEventArgs e)
 		{
 			int i = this.unterKonten.SelectedIndex;
-			NeuesUnterKonto kont = new NeuesUnterKonto();
+			NeuesUnterKonto kont = new NeuesUnterKonto(this);
 			kont.Start(this.currentKonto_nr, this.currentUnterKonto_nr);
 
 			if (kont.DialogResult == true)
@@ -404,7 +406,7 @@
 
 		private void einstellungen_Click(object sender, RoutedEventArgs e)
 		{
-			Einstellungen einstellungen = new Einstellungen();
+			Einstellungen einstellungen = new Einstellungen(this);
 			einstellungen.ShowDialog();
 
 			if (einstellungen.DialogResult == true)
