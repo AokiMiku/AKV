@@ -62,12 +62,12 @@
 			init.ShowDialog();
 
 			this.ActualizeKonten();
-			this.Actualize();
-
+			
 			if (UserSettings.BeimStartKontoOeffnen && !string.IsNullOrEmpty(UserSettings.ZuletztOffenesKonto))
 			{
 				this.konten.SelectedItem = UserSettings.ZuletztOffenesKonto;
 			}
+			this.Actualize();
 		}
 
 		private void ActualizeKonten()
@@ -97,20 +97,6 @@
 			this.unterKonten.SelectedItem = select;
 		}
 
-		private void konten_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if (this.konten.SelectedItem != null)
-			{
-				Konto konto = new Konto();
-				konto.Where = "Name = '" + this.konten.SelectedItem + "'";
-				konto.Read();
-
-				this.currentKonto_nr = konto.Nummer;
-
-				this.Actualize();
-			}
-		}
-
 		private void Actualize()
 		{
 			if (!UserSettings.UnterKonten)
@@ -119,7 +105,6 @@
 			}
 			else
 			{
-				this.ActualizeUnterKonten();
 				this.frontend.RowDefinitions[1].Height = new GridLength(50);
 			}
 
@@ -245,6 +230,22 @@
 			{
 				this.editKosten.IsEnabled = false;
 				this.delKosten.IsEnabled = false;
+			}
+		}
+
+		private void konten_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (this.konten.SelectedItem != null)
+			{
+				Konto konto = new Konto();
+				konto.Where = "Name = '" + this.konten.SelectedItem + "'";
+				konto.Read();
+
+				this.currentKonto_nr = konto.Nummer;
+
+				this.Actualize();
+				if (UserSettings.UnterKonten)
+					this.ActualizeUnterKonten();
 			}
 		}
 
