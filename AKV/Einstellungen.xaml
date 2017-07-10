@@ -30,7 +30,14 @@
             </Grid.RowDefinitions>
 
             <TabControl Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" >
-                <TabItem Name="einstellungenAllgemein" Header="Allgemeines" >
+                <TabItem Name="einstellungenAllgemein" >
+                    <TabItem.Header>
+                        <DockPanel>
+                            <Image Source="Resources/Icons/wheel.ico" Height="23" />
+							<Label Width="3" />
+							<TextBlock Text="Allgemeines" />
+						</DockPanel>
+					</TabItem.Header>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />

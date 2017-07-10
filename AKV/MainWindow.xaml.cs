@@ -62,12 +62,12 @@
 			init.ShowDialog();
 
 			this.ActualizeKonten();
+			this.Actualize();
 			
 			if (UserSettings.BeimStartKontoOeffnen && !string.IsNullOrEmpty(UserSettings.ZuletztOffenesKonto))
 			{
 				this.konten.SelectedItem = UserSettings.ZuletztOffenesKonto;
 			}
-			this.Actualize();
 		}
 
 		private void ActualizeKonten()
@@ -126,8 +126,6 @@
 				Core.KontoCore kontoCore = new Core.KontoCore();
 				this.kosten.ItemsSource = kontoCore.GetAlleKosten(this.currentKonto_nr);
 				this.addKosten.IsEnabled = true;
-
-				this.kosten.Columns.Where(x => x.Header.ToString() == "Nummer").First().Visibility = Visibility.Hidden;
 
 				Konto konto = new Konto();
 				konto.Where = "Nummer = " + this.currentKonto_nr;
@@ -192,6 +190,7 @@
 				{
 					this.kosten.Columns.Where(x => x.Header.ToString() == "UnterKategorie").First().Visibility = Visibility.Hidden;
 				}
+				this.kosten.Columns.Where(x => x.Header.ToString() == "Nummer").First().Visibility = Visibility.Hidden;
 			}
 			else
 			{
@@ -242,10 +241,15 @@
 				konto.Read();
 
 				this.currentKonto_nr = konto.Nummer;
+				this.unterKonten.SelectedItem = null;
 
 				this.Actualize();
 				if (UserSettings.UnterKonten)
+				{
 					this.ActualizeUnterKonten();
+					if (this.unterKonten.Items.Count > 0)
+						this.unterKonten.SelectedIndex = 0;
+				}
 			}
 		}
 

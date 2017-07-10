@@ -69,7 +69,10 @@
 					case IntervallEinheiten.AlleXWochen:
 					case IntervallEinheiten.AlleXMonate:
 					case IntervallEinheiten.AlleXJahre:
-						return this.einheit.EinheitToString().Replace(" X ", " " + this.intervall + " ");
+						if (this.intervall == 1)
+							return this.einheit.EinheitToSingularString();
+						else
+							return this.einheit.EinheitToString().Replace(" X ", " " + this.intervall + " ");
 					case IntervallEinheiten.Januar:
 					case IntervallEinheiten.Februar:
 					case IntervallEinheiten.März:
@@ -136,7 +139,10 @@
 			this.Notiz = kosten.Notiz;
 			this.unterKonto_nr = kosten.UnterKonto_Nr;
 			this.intervall = kosten.Intervall;
-			this.einheit = (IntervallEinheiten)kosten.IntervallEinheit;
+			if (this.intervall > 0)
+				this.einheit = (IntervallEinheiten)kosten.IntervallEinheit;
+			else
+				this.einheit = IntervallEinheiten.Null;
 		}
 	}
 }

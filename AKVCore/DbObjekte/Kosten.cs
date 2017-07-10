@@ -144,5 +144,34 @@
 					return "";
 			}
 		}
+
+		public static string EinheitToSingularString(this IntervallEinheiten einheit)
+		{
+			switch (einheit)
+			{
+				case IntervallEinheiten.AlleXTage:
+					return "Jeden Tag";
+				case IntervallEinheiten.AlleXWochen:
+					return "Jede Woche";
+				case IntervallEinheiten.AlleXMonate:
+					return "Jeden Monat";
+				case IntervallEinheiten.AlleXJahre:
+					return "Jedes Jahr";
+				case IntervallEinheiten.Januar:
+				case IntervallEinheiten.Februar:
+				case IntervallEinheiten.März:
+				case IntervallEinheiten.April:
+				case IntervallEinheiten.Mai:
+				case IntervallEinheiten.Juni:
+				case IntervallEinheiten.Juli:
+				case IntervallEinheiten.August:
+				case IntervallEinheiten.September:
+				case IntervallEinheiten.Oktober:
+				case IntervallEinheiten.November:
+				case IntervallEinheiten.Dezember:
+				default:
+					return einheit.EinheitToString();
+			}
+		}
 	}
 }
