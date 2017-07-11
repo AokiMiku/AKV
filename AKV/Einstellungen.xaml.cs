@@ -39,14 +39,33 @@
 				this.unterKontoSummieren.IsEnabled = false;
 			}
 		}
+		private void updateAktiv_Click(object sender, RoutedEventArgs e)
+		{
+			if (this.updateAktiv.IsChecked == true)
+			{
+				this.updateTageContainer.IsEnabled = true;
+			}
+			else
+			{
+				this.updateTageContainer.IsEnabled = false;
+			}
+		}
 
 		private void speichern_Click(object sender, RoutedEventArgs e)
 		{
+			//Allgemein
 			UserSettings.BeimStartKontoOeffnen = this.beimStartKontoOeffnen.IsChecked == true;
 			UserSettings.ZeigeGesamtBetrag = this.zeigeGesamtBetrag.IsChecked == true;
+			//Unterkonten
 			UserSettings.UnterKonten = this.unterKontenAktiv.IsChecked == true;
 			UserSettings.KostenPerUnterKonto = this.kostenPerUnterKonto.IsChecked == true;
 			UserSettings.UnterKontoSummieren = this.unterKontoSummieren.IsChecked == true;
+			//Updates
+			UserSettings.Updates = this.updateAktiv.IsChecked == true;
+			int tage = this.updateAlleXTage.Text.ToInt();
+			if (tage == 0)
+				tage = 1;
+			UserSettings.UpdateAlleXTage = tage;
 
 			this.DialogResult = true;
 			this.Close();
@@ -60,8 +79,10 @@
 
 		private void Base4Windows_Loaded(object sender, RoutedEventArgs e)
 		{
+			//Allgemein
 			this.beimStartKontoOeffnen.IsChecked = UserSettings.BeimStartKontoOeffnen;
 			this.zeigeGesamtBetrag.IsChecked = UserSettings.ZeigeGesamtBetrag;
+			//Unterkonten
 			this.unterKontenAktiv.IsChecked = UserSettings.UnterKonten;
 			if (this.unterKontenAktiv.IsChecked == true)
 			{
@@ -70,6 +91,13 @@
 			}
 			this.kostenPerUnterKonto.IsChecked = UserSettings.KostenPerUnterKonto;
 			this.unterKontoSummieren.IsChecked = UserSettings.UnterKontoSummieren;
+			//Updates
+			this.updateAktiv.IsChecked = UserSettings.Updates;
+			if (this.updateAktiv.IsChecked == true)
+			{
+				this.updateTageContainer.IsEnabled = true;
+			}
+			this.updateAlleXTage.Text = UserSettings.UpdateAlleXTage.ToString();
 		}
 	}
 }

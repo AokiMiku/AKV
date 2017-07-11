@@ -68,6 +68,25 @@
                         <CheckBox Name="unterKontoSummieren" Content="Gesamt-/verbleibende Summe pro Unterkategorie anzeigen" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" IsEnabled="False" />
                     </Grid>
                 </TabItem>
+                <TabItem Name="einstellungenUpdates" Header="Updates" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+						<CheckBox Name="updateAktiv" Content="Aktiv" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Click="updateAktiv_Click" />
+                        <DockPanel Name="updateTageContainer" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" IsEnabled="False">
+							<Label Content="Alle " />
+							<TextBox Name="updateAlleXTage" Width="20" />
+							<Label Content=" Tage nach neuer Version prüfen" />
+						</DockPanel>
+                    </Grid>
+                </TabItem>
             </TabControl>
 
             <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center">

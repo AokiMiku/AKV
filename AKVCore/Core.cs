@@ -8,6 +8,10 @@
 	using System.Globalization;
 	using System.Threading;
 	using System.Threading.Tasks;
+	using System.Net;
+	using System.Diagnostics;
+	using System.IO;
+	using System.IO.Compression;
 
 	using ApS;
 	using ApS.Firebird;
@@ -19,6 +23,7 @@
 		#region public
 		public static event EventHandler<ErrorEventArgs> ErrorOccured;
 		public static Einstellungen CoreSettings = new Einstellungen();
+		public const string Version = "0.7.1";
 		#endregion public
 		#region private/protected
 
@@ -35,66 +40,14 @@
 
 			fbConnString.Database = Services.GetAppDir() + @"\Daten\AKV.fdb";
 			ApS.Settings.ConnectionString = fbConnString.ToString();
+
+			if (File.Exists(Services.GetAppDir() + @"\Update.exe"))
+				File.Delete(Services.GetAppDir() + @"\Update.exe");
 		}
 		#endregion Constructors
 
 		#region Methods
 		#region public
-		public void UpdateDatabase(Versionen vers)
-		{
-			switch (vers)
-			{
-				case Versionen.Version01:
-					break;
-				case Versionen.Version02:
-					Datenbankversionen.Version02 v02 = new Datenbankversionen.Version02();
-					v02.ErrorOccured += VersionenErrorOccured;
-					v02.RunStatements();
-					v02.ErrorOccured -= VersionenErrorOccured;
-					CoreSettings.SetSetting("Version02Updated", true);
-					break;
-				case Versionen.Version03:
-					break;
-				case Versionen.Version04:
-					break;
-				case Versionen.Version05:
-					Datenbankversionen.Version05 v05 = new Datenbankversionen.Version05();
-					v05.ErrorOccured += VersionenErrorOccured;
-					v05.RunStatements();
-					v05.ErrorOccured -= VersionenErrorOccured;
-					CoreSettings.SetSetting("Version05Updated", true);
-					break;
-				case Versionen.Version06:
-					Datenbankversionen.Version06 v06 = new Datenbankversionen.Version06();
-					v06.ErrorOccured += VersionenErrorOccured;
-					v06.RunStatements();
-					v06.ErrorOccured -= VersionenErrorOccured;
-					CoreSettings.SetSetting("Version06Updated", true);
-					break;
-				case Versionen.Version06_1:
-					Datenbankversionen.Version06_1 v06_1 = new Datenbankversionen.Version06_1();
-					v06_1.ErrorOccured += VersionenErrorOccured;
-					v06_1.RunStatements();
-					v06_1.ErrorOccured -= VersionenErrorOccured;
-					CoreSettings.SetSetting("Version06_1Updated", true);
-					break;
-				case Versionen.Version07:
-					Datenbankversionen.Version07 v07 = new Datenbankversionen.Version07();
-					v07.ErrorOccured += VersionenErrorOccured;
-					v07.RunStatements();
-					v07.ErrorOccured -= VersionenErrorOccured;
-					CoreSettings.SetSetting("Version07Updated", true);
-					break;
-				default:
-					break;
-			}
-		}
-
-		private void VersionenErrorOccured(object sender, ErrorInUpdate e)
-		{
-			ErrorOccured?.Invoke(this, new ErrorEventArgs(e.ErrorMessage));
-		}
-
 		public class KontoCore : Core
 		{
 			public string Name = "";
@@ -621,7 +574,125 @@
 			}
 		}
 
+		public class Updater
+		{
+			public event EventHandler<DownloadProgressChangedEventArgs> UpdateProgressChanged;
+			public event EventHandler<System.ComponentModel.AsyncCompletedEventArgs> DownloadCompleted;
+			private Uri updateDownload;
 
+			public void UpdateDatabase(Versionen vers)
+			{
+				switch (vers)
+				{
+					case Versionen.Version01:
+						break;
+					case Versionen.Version02:
+						Datenbankversionen.Version02 v02 = new Datenbankversionen.Version02();
+						v02.ErrorOccured += VersionenErrorOccured;
+						v02.RunStatements();
+						v02.ErrorOccured -= VersionenErrorOccured;
+						CoreSettings.SetSetting("Version02Updated", true);
+						break;
+					case Versionen.Version03:
+						break;
+					case Versionen.Version04:
+						break;
+					case Versionen.Version05:
+						Datenbankversionen.Version05 v05 = new Datenbankversionen.Version05();
+						v05.ErrorOccured += VersionenErrorOccured;
+						v05.RunStatements();
+						v05.ErrorOccured -= VersionenErrorOccured;
+						CoreSettings.SetSetting("Version05Updated", true);
+						break;
+					case Versionen.Version06:
+						Datenbankversionen.Version06 v06 = new Datenbankversionen.Version06();
+						v06.ErrorOccured += VersionenErrorOccured;
+						v06.RunStatements();
+						v06.ErrorOccured -= VersionenErrorOccured;
+						CoreSettings.SetSetting("Version06Updated", true);
+						break;
+					case Versionen.Version06_1:
+						Datenbankversionen.Version06_1 v06_1 = new Datenbankversionen.Version06_1();
+						v06_1.ErrorOccured += VersionenErrorOccured;
+						v06_1.RunStatements();
+						v06_1.ErrorOccured -= VersionenErrorOccured;
+						CoreSettings.SetSetting("Version06_1Updated", true);
+						break;
+					case Versionen.Version07:
+						Datenbankversionen.Version07 v07 = new Datenbankversionen.Version07();
+						v07.ErrorOccured += VersionenErrorOccured;
+						v07.RunStatements();
+						v07.ErrorOccured -= VersionenErrorOccured;
+						CoreSettings.SetSetting("Version07Updated", true);
+						break;
+					default:
+						break;
+				}
+			}
+			private void VersionenErrorOccured(object sender, ErrorInUpdate e)
+			{
+				ErrorOccured?.Invoke(this, new ErrorEventArgs(e.ErrorMessage));
+			}
+
+			public bool CheckForUpdate()
+			{
+				UserSettings.LetztesUpdateAm = DateTime.Now.Date;
+				try
+				{
+					string updateINI = @"https://github.com/eightball60/Versionen/archive/master.zip";
+					using (WebClient client = new WebClient())
+					{
+						client.DownloadFile(new Uri(updateINI), Services.GetAppDir() + @"\Update.zip");
+					}
+				}
+				catch
+				{
+					return false;
+				}
+
+				ZipFile.ExtractToDirectory(Services.GetAppDir() + @"\Update.zip", Services.GetAppDir() + @"\Update");
+				File.Delete(Services.GetAppDir() + @"\Update.zip");
+				IniFile update = new IniFile(Services.GetAppDir() + @"\Update\Versionen-master\Update.ini");
+				string version = update.GetString("AKV", "Version");
+				this.updateDownload = new Uri(update.GetString("AKV", "Link"));
+                Directory.Delete(Services.GetAppDir() + @"\Update", true);
+                if (version != Version)
+					return true;
+				else
+					return false;
+            }
+
+			public void DownloadUpdateAsync()
+			{
+				if (this.updateDownload == null)
+					return;
+
+				using (WebClient client = new WebClient())
+				{
+					client.DownloadProgressChanged += Client_DownloadProgressChanged;
+					client.DownloadFileCompleted += Client_DownloadFileCompleted;
+					client.DownloadFileAsync(this.updateDownload, Services.GetAppDir() + @"\Update.exe");
+				}
+			}
+
+			private void Client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+			{
+				this.DownloadCompleted?.Invoke(this, e);
+			}
+
+			private void Client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+			{
+				this.UpdateProgressChanged?.Invoke(this, e);
+			}
+
+			public void InstallUpdate()
+			{
+				Process update = new Process();
+				ProcessStartInfo startInfo = new ProcessStartInfo(Services.GetAppDir() + @"\Update.exe");
+				update.StartInfo = startInfo;
+				update.Start();
+			}
+		}
 		#endregion public
 		#region private/protected
 

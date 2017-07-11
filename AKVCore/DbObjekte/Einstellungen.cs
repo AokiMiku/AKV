@@ -53,6 +53,10 @@
 		{
 			this.SetSetting(key, value.ToString());
 		}
+		public void SetSetting(string key, int value)
+		{
+			this.SetSetting(key, value.ToString());
+		}
 
 		#region DbZugriffe
 		public string SettingKey

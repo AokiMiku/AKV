@@ -54,5 +54,25 @@
 			set { Core.CoreSettings.SetSetting("UnterKontoSummieren", value); }
 		}
 		#endregion UnterKonten
+
+		#region Updates
+		public static bool Updates
+		{
+			get { return Core.CoreSettings.GetSetting("Updates").ToBoolean(); }
+			set { Core.CoreSettings.SetSetting("Updates", value); }
+		}
+
+		public static int UpdateAlleXTage
+		{
+			get { return Core.CoreSettings.GetSetting("UpdateAlleXTage").ToInt(); }
+			set { Core.CoreSettings.SetSetting("UpdateAlleXTage", value); }
+		}
+
+		public static DateTime LetztesUpdateAm
+		{
+			get { return Core.CoreSettings.GetSetting("LetztesUpdateAm").ToDateTime(); }
+			set { Core.CoreSettings.SetSetting("LetztesUpdateAm", value); }
+		}
+		#endregion Updates
 	}
 }

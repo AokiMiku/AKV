@@ -31,31 +31,47 @@
 		public MainWindow()
 		{
 			InitializeComponent();
+			Core.Updater updater = new Core.Updater();
 
 			if (!Core.CoreSettings.GetSetting("Version02Updated").ToBoolean())
 			{
-				this.core.UpdateDatabase(Versionen.Version02);
+				updater.UpdateDatabase(Versionen.Version02);
 			}
 			if (!Core.CoreSettings.GetSetting("Version05Updated").ToBoolean())
 			{
-				this.core.UpdateDatabase(Versionen.Version05);
+				updater.UpdateDatabase(Versionen.Version05);
 			}
 			if (!Core.CoreSettings.GetSetting("Version06Updated").ToBoolean())
 			{
-				this.core.UpdateDatabase(Versionen.Version06);
+				updater.UpdateDatabase(Versionen.Version06);
 			}
 			if (!Core.CoreSettings.GetSetting("Version06_1Updated").ToBoolean())
 			{
-				this.core.UpdateDatabase(Versionen.Version06_1);
+				updater.UpdateDatabase(Versionen.Version06_1);
 			}
 			if (!Core.CoreSettings.GetSetting("Version07Updated").ToBoolean())
 			{
-				this.core.UpdateDatabase(Versionen.Version07);
+				updater.UpdateDatabase(Versionen.Version07);
 			}
 		}
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
+			this.version.Content = "Version " + Core.Version;
+
+			if (UserSettings.Updates && UserSettings.LetztesUpdateAm.AddDays(UserSettings.UpdateAlleXTage) <= DateTime.Now.Date)
+			{
+				Core.Updater updater = new Core.Updater();
+				if (updater.CheckForUpdate())
+				{
+					if (MessageBox.Show("Es ist eine neue Version verfügbar. Wollen Sie sie jetzt herunterladen und installieren?", "Update erforderlich", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+					{
+						Updater upd = new Updater();
+						upd.Start(updater);
+					}
+				}
+			}
+
 			Initializer init = new Initializer();
 			init.Top = (this.Top + this.Height / 2) - 50;
 			init.Left = (this.Left + this.Width / 2) - 250;
