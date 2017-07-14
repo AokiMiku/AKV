@@ -23,7 +23,7 @@
 		#region public
 		public static event EventHandler<ErrorEventArgs> ErrorOccured;
 		public static Einstellungen CoreSettings = new Einstellungen();
-		public const string Version = "0.7.1";
+		public const string Version = "0.7.2";
 		#endregion public
 		#region private/protected
 
@@ -48,7 +48,7 @@
 
 		#region Methods
 		#region public
-		public class KontoCore : Core
+		public class KontoCore
 		{
 			public string Name = "";
 			public decimal Saldo = 0;
@@ -141,7 +141,7 @@
 			}
 		}
 
-		public class UnterKontoCore : Core
+		public class UnterKontoCore
 		{
 
 			public string Name = "";
@@ -233,7 +233,7 @@
 			}
 		}
 
-		public class KostenCore : Core
+		public class KostenCore
 		{
 			public event EventHandler<EventArgs> KostenExist;
 			public bool KostenExistProcessed = false;

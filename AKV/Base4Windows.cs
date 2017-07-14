@@ -29,6 +29,8 @@
 			appIcon.UriSource = new Uri("pack://application:,,,/Resources/Icons/AKV.ico");
 			appIcon.EndInit();
 			this.Icon = appIcon;
+
+			this.core = new AKVCore.Core();
 		}
 
 		private void Core_ErrorOccured(object sender, AKVCore.ErrorEventArgs e)

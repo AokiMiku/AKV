@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "ApS KostenVerwaltung"
-#define MyAppVersion "0.7.1"
+#define MyAppVersion "0.7.2"
 #define MyAppPublisher "ApS Industries"
 #define MyAppExeName "AKV.exe"
 
@@ -17,12 +17,12 @@ AppVerName={#MyAppName}
 AppPublisher={#MyAppPublisher}
 DefaultDirName={pf}\AKV
 DisableProgramGroupPage=yes
-SourceDir=C:\Users\Kenji Kerman\Documents\Proggen\CSharp\AKV\Setups\SetupSource
-OutputDir=C:\Users\Kenji Kerman\Documents\Proggen\CSharp\AKV\Setups\{#MyAppVersion}
+SourceDir=..\SetupSource
+OutputDir=..\{#MyAppVersion}
 OutputBaseFilename=AKV_{#MyAppVersion}
 Compression=lzma
 SolidCompression=yes
-SetupIconFile=AKV.ico
+SetupIconFile=..\SetupSource\AKV.ico
 UninstallDisplayIcon={app}\AKV.exe
 
 [Languages]
