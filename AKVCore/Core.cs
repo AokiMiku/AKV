@@ -55,6 +55,7 @@
 			public decimal Gebuehren = 0;
 			public decimal ZinsenPA = 0;
 			public decimal DispoPA = 0;
+			public string Notiz = "";
 
 			public Konto GetAlleKonten()
 			{
@@ -76,6 +77,7 @@
 				konto.Gebuehren = this.Gebuehren;
 				konto.Zinsen_pa = this.ZinsenPA;
 				konto.Dispo_pa = this.DispoPA;
+				konto.Notiz = this.Notiz;
 
 				if (konto.EoF)
 					konto.BuildSaveStmt(SqlAction.Insert);
@@ -119,6 +121,7 @@
 				konto.Gebuehren = this.Gebuehren;
 				konto.Zinsen_pa = this.ZinsenPA;
 				konto.Dispo_pa = this.DispoPA;
+				konto.Notiz = this.Notiz;
 
 				konto.Save(SqlAction.Update);
 			}
@@ -625,6 +628,13 @@
 						v07.ErrorOccured -= VersionenErrorOccured;
 						CoreSettings.SetSetting("Version07Updated", true);
 						break;
+					case Versionen.Version07_2:
+						Datenbankversionen.Version07_2 v07_2 = new Datenbankversionen.Version07_2();
+						v07_2.ErrorOccured += VersionenErrorOccured;
+						v07_2.RunStatements();
+						v07_2.ErrorOccured -= VersionenErrorOccured;
+						CoreSettings.SetSetting("Version07_2Updated", true);
+						break;
 					default:
 						break;
 				}
@@ -729,6 +739,7 @@
 		Version05,
 		Version06,
 		Version06_1,
-		Version07
+		Version07,
+		Version07_2
 	}
 }

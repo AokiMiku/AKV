@@ -53,6 +53,10 @@
 			{
 				updater.UpdateDatabase(Versionen.Version07);
 			}
+			if (!Core.CoreSettings.GetSetting("Version07_2Updated").ToBoolean())
+			{
+				updater.UpdateDatabase(Versionen.Version07_2);
+			}
 		}
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -137,6 +141,7 @@
 			{
 				this.verblBetrag.Visibility = Visibility.Visible;
 				this.betrag.Visibility = Visibility.Visible;
+				this.notizenContainer.Visibility = Visibility.Visible;
 				this.editKonto.IsEnabled = true;
 				this.delKonto.IsEnabled = true;
 				Core.KontoCore kontoCore = new Core.KontoCore();
@@ -162,6 +167,7 @@
 					kontoCore.Name = konto.Name;
 					this.betrag.Content = konto.Saldo.ToString("0.00 €");
 					this.gesamtBetrag.Content = kontoCore.GesamtBetrag().ToString("0.00 €");
+					this.notiz.Text = konto.Notiz;
 				}
 
 				if (UserSettings.UnterKonten)
@@ -218,6 +224,7 @@
 				this.addKosten.IsEnabled = false;
 				this.verblBetrag.Visibility = Visibility.Collapsed;
 				this.betrag.Visibility = Visibility.Collapsed;
+				this.notizenContainer.Visibility = Visibility.Collapsed;
 			}
 		}
 

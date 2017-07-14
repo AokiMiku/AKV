@@ -94,6 +94,7 @@
 			this.kontoCore.Gebuehren = gebu;
 			this.kontoCore.ZinsenPA = zins;
 			this.kontoCore.DispoPA = disp;
+			this.kontoCore.Notiz = this.notiz.Text;
 
 			if (this.modus == FensterModus.Neu)
 				this.kontoCore.Add();
@@ -127,6 +128,7 @@
 				this.zinsenPA.Text = konto.Zinsen_pa.ToString();
 				this.dispoPA.Text = konto.Dispo_pa.ToString();
 				this.gebuehren.Text = konto.Gebuehren.ToString();
+				this.notiz.Text = konto.Notiz;
 			}
 			this.ShowDialog();
 

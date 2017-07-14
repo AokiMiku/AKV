@@ -30,15 +30,33 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
                 <RowDefinition Height="50" />
-                <RowDefinition Height="50" />
+                <RowDefinition />
                 <RowDefinition Height="50" />
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <Label Content="Kategorie:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-            <ComboBox Name="konten" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectionChanged="konten_SelectionChanged" />
+            <Label Content="Kategorie:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" />
+            <DockPanel Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <ComboBox Name="konten" Width="150" SelectionChanged="konten_SelectionChanged" />
+				
+                <DockPanel >
+                    <Label Width="3" />
+                    <Button Name="addKonto" Width="20" Click="addKonto_Click" >
+                        <Image Source="Resources/Icons/add.ico" />
+                    </Button>
+                    <Label Width="3" />
+                    <Button Name="editKonto" Width="20" IsEnabled="False" Click="editKonto_Click" >
+                        <Image Source="Resources/Icons/edit.ico" />
+                    </Button>
+                    <Label Width="3" />
+                    <Button Name="delKonto" Width="20" IsEnabled="False" Click="delKonto_Click" >
+                        <Image Source="Resources/Icons/del.ico" />
+                    </Button>
+                </DockPanel>
+            </DockPanel>
+
             <Button Name="einstellungen" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="einstellungen_Click" Height="23" >
                 <DockPanel>
                     <Image Source="Resources/Icons/wheel.ico" />
@@ -46,46 +64,44 @@
                     <TextBlock Text="Einstellungen" />
                 </DockPanel>
             </Button>
-            <DockPanel Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" >
-                <Label Width="3" />
-                <Button Name="addKonto" Width="20" Click="addKonto_Click" >
-                    <Image Source="Resources/Icons/add.ico" />
-				</Button>
-                <Label Width="3" />
-                <Button Name="editKonto" Width="20" IsEnabled="False" Click="editKonto_Click" >
-                    <Image Source="Resources/Icons/edit.ico" />
-				</Button>
-                <Label Width="3" />
-                <Button Name="delKonto" Width="20" IsEnabled="False" Click="delKonto_Click" >
-                    <Image Source="Resources/Icons/del.ico" />
-                </Button>
-            </DockPanel>
-			<Label Content="Unter-Kategorie:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" />
-            <ComboBox Name="unterKonten" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectionChanged="unterKonten_SelectionChanged" />
-            <DockPanel Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" >
-                <Label Width="3" />
-                <Button Name="addUnterKonto" Width="20" Click="addUnterKonto_Click" >
-                    <Image Source="Resources/Icons/add.ico" />
-                </Button>
-                <Label Width="3" />
-                <Button Name="editUnterKonto" Width="20" IsEnabled="False" Click="editUnterKonto_Click" >
-                    <Image Source="Resources/Icons/edit.ico" />
-                </Button>
-                <Label Width="3" />
-                <Button Name="delUnterKonto" Width="20" IsEnabled="False" Click="delUnterKonto_Click" >
-                    <Image Source="Resources/Icons/del.ico" />
-                </Button>
-            </DockPanel>
-            <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" >
-                <DockPanel Name="gesBetragContainer">
-                    <Label Name="gesBetrag" Content="Gesamtbetrag:" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                    <Label Name="gesamtBetrag" Content="XXX" HorizontalAlignment="Right" VerticalAlignment="Center" />
+
+            <Label Content="Unter-Kategorie:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" />
+            <DockPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Center" >
+                <ComboBox Name="unterKonten" Width="150" SelectionChanged="unterKonten_SelectionChanged" />
+
+                <DockPanel >
+                    <Label Width="3" />
+                    <Button Name="addUnterKonto" Width="20" Click="addUnterKonto_Click" >
+                        <Image Source="Resources/Icons/add.ico" />
+                    </Button>
+                    <Label Width="3" />
+                    <Button Name="editUnterKonto" Width="20" IsEnabled="False" Click="editUnterKonto_Click" >
+                        <Image Source="Resources/Icons/edit.ico" />
+                    </Button>
+                    <Label Width="3" />
+                    <Button Name="delUnterKonto" Width="20" IsEnabled="False" Click="delUnterKonto_Click" >
+                        <Image Source="Resources/Icons/del.ico" />
+                    </Button>
                 </DockPanel>
-                <DockPanel>
-                    <Label Name="verblBetrag" Content="Verbleibender Betrag:" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                    <Label Name="betrag"  Content="XXX" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                </DockPanel>				
+            </DockPanel>
+
+            <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" >
+                <DockPanel Name="gesBetragContainer" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                    <Label Name="gesBetrag" Content="Gesamtbetrag:" />
+                    <Label Name="gesamtBetrag" Content="XXX" />
+                </DockPanel>
+                <DockPanel HorizontalAlignment="Left" VerticalAlignment="Top" >
+                    <Label Name="verblBetrag" Content="Verbleibender Betrag:" />
+                    <Label Name="betrag"  Content="XXX" />
+                </DockPanel>
             </StackPanel>
+			
+            <DockPanel Name="notizenContainer" Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden" >
+                <Label Content="Notizen: " />
+                <Label Width="10" />
+                <TextBox Name="notiz" AcceptsReturn="True" AcceptsTab="True" AutoWordSelection="True" TextWrapping="Wrap" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+            </DockPanel>
+			
             <DockPanel Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="4" Height="23" >
                 <Button Name="addKosten" IsEnabled="False" Click="addKosten_Click" >
                     <DockPanel>

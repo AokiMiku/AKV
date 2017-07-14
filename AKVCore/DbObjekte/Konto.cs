@@ -47,6 +47,11 @@
 			get { return this.GetDecimal("DISPO_PA"); }
 			set { this.Put("DISPO_PA", value); }
 		}
+		public string Notiz
+		{
+			get { return this.GetString("NOTIZ"); }
+			set { this.Put("NOTIZ", value); }
+		}
 		#endregion DbZugriffe
 	}
 }

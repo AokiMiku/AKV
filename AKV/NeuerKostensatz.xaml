@@ -62,7 +62,7 @@
             <Label Name="unterKonto" Content="Unter-Kategorie:" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Right" VerticalAlignment="Center" />
 			<ComboBox Name="unterKonten" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
 			<Label Content="Notizen: " Grid.Column="0" Grid.Row="8" HorizontalAlignment="Right" VerticalAlignment="Top" />
-			<TextBox Name="notiz" Grid.Column="1" Grid.Row="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AcceptsReturn="True" AcceptsTab="True" AutoWordSelection="True" TextWrapping="Wrap" />
+            <TextBox Name="notiz" Grid.Column="1" Grid.Row="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AcceptsReturn="True" AcceptsTab="True" AutoWordSelection="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" />
             <DockPanel Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" Height="23" >
                 <Button Name="speichern" Click="speichern_Click" >
                     <DockPanel>
