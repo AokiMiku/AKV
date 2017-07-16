@@ -15,6 +15,7 @@
 	using System.Windows.Media.Imaging;
 	using System.Windows.Shapes;
 	using AKVCore;
+	using ApS;
 
 	/// <summary>
 	/// Interaktionslogik für NeuesKonto.xaml
@@ -95,6 +96,7 @@
 			this.kontoCore.ZinsenPA = zins;
 			this.kontoCore.DispoPA = disp;
 			this.kontoCore.Notiz = this.notiz.Text;
+			this.kontoCore.Schuldkonto = this.schuldenKonto.IsChecked.ToBoolean();
 
 			if (this.modus == FensterModus.Neu)
 				this.kontoCore.Add();
@@ -129,10 +131,11 @@
 				this.dispoPA.Text = konto.Dispo_pa.ToString();
 				this.gebuehren.Text = konto.Gebuehren.ToString();
 				this.notiz.Text = konto.Notiz;
+				this.schuldenKonto.IsChecked = konto.Schuldkonto;
 			}
 			this.ShowDialog();
 
-			if (this.DialogResult == true)
+			if (this.DialogResult.ToBoolean())
 			{
 				return this.name.Text;
 			}

@@ -56,6 +56,7 @@
 			public decimal ZinsenPA = 0;
 			public decimal DispoPA = 0;
 			public string Notiz = "";
+			public bool Schuldkonto = false;
 
 			public Konto GetAlleKonten()
 			{
@@ -72,12 +73,18 @@
 				konto.Where = "Name = '" + this.Name + "'";
 				konto.Read();
 
+				if (this.Schuldkonto && !this.Saldo.ToString().StartsWith("-"))
+					this.Saldo *= -1;
+
 				konto.Name = this.Name;
 				konto.Saldo = this.Saldo;
-				konto.Gebuehren = this.Gebuehren;
+                konto.Gebuehren = this.Gebuehren;
 				konto.Zinsen_pa = this.ZinsenPA;
 				konto.Dispo_pa = this.DispoPA;
+				if (this.Schuldkonto)
+					this.Notiz = "Schuldkonto" + Environment.NewLine + this.Notiz;
 				konto.Notiz = this.Notiz;
+				konto.Schuldkonto = this.Schuldkonto;
 
 				if (konto.EoF)
 					konto.BuildSaveStmt(SqlAction.Insert);
@@ -114,6 +121,9 @@
 				konto.Where = "Nummer = " + konto_nr;
 				konto.Read();
 
+				if (this.Schuldkonto && !this.Saldo.ToString().StartsWith("-"))
+					this.Saldo *= -1;
+
 				CoreSettings.SetSetting(this.Name + "_Gesamt", CoreSettings.GetSetting(konto.Name + "_Gesamt"));
 
 				konto.Name = this.Name;
@@ -122,6 +132,7 @@
 				konto.Zinsen_pa = this.ZinsenPA;
 				konto.Dispo_pa = this.DispoPA;
 				konto.Notiz = this.Notiz;
+				konto.Schuldkonto = this.Schuldkonto;
 
 				konto.Save(SqlAction.Update);
 			}
@@ -167,6 +178,19 @@
 					ErrorOccured?.Invoke(this, new ErrorEventArgs("Es wurde keine Kategorie ausgewählt, zu der diese Unterkategorie gehören soll!"));
 					return;
 				}
+
+				using (Konto k = new Konto())
+				{
+					k.Where = "Nummer = " + this.Konto_Nr;
+					k.Read();
+
+					if (!k.EoF)
+					{
+						if (k.Schuldkonto && !this.Saldo.ToString().StartsWith("-"))
+							this.Saldo *= -1;
+					}
+                }
+
 				UnterKonto konto = new UnterKonto();
 				konto.Where = "Name = '" + this.Name + "' AND Konto_Nr = " + this.Konto_Nr;
 				konto.Read();
@@ -209,6 +233,18 @@
 				UnterKonto konto = new UnterKonto();
 				konto.Where = "Nummer = " + unterKonto_nr;
 				konto.Read();
+
+				using (Konto k = new Konto())
+				{
+					k.Where = "Nummer = " + this.Konto_Nr;
+					k.Read();
+
+					if (!k.EoF)
+					{
+						if (k.Schuldkonto && !this.Saldo.ToString().StartsWith("-"))
+							this.Saldo *= -1;
+					}
+				}
 
 				CoreSettings.SetSetting(this.Name + "_Gesamt", CoreSettings.GetSetting(konto.Name + "_Gesamt"));
 

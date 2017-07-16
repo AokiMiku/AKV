@@ -34,6 +34,11 @@
 
 			if (this.bezahltAm.SelectedDate != null)
 				bezahltAm = (DateTime)this.bezahltAm.SelectedDate;
+			else
+			{
+				MessageBox.Show(this, "Es muss ein Datum ausgewählt sein!", "Fehler", MessageBoxButton.OK);
+				return;
+			}
 
 			this.kostenCore.BezahltAm = bezahltAm;
 

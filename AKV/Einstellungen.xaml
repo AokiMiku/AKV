@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AKV"
         mc:Ignorable="d"
-        Title="Einstellungen" MinHeight="200" MinWidth="650" Height="0" Width="0" Loaded="Base4Windows_Loaded" >
+        Title="Einstellungen" MinHeight="200" MinWidth="700" Height="0" Width="0" Loaded="Base4Windows_Loaded" >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10" />
@@ -40,8 +40,8 @@
 					</TabItem.Header>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -52,11 +52,12 @@
                         <CheckBox Name="zeigeGesamtBetrag" Content="Gesamtbetrag anzeigen" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" />
                     </Grid>
                 </TabItem>
+				
                 <TabItem Name="einstellungenUnterkonto" Header="Unter-Kategorien" >
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -65,14 +66,15 @@
 
                         <CheckBox Name="unterKontenAktiv" Content="Aktiv" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Click="unterKontenAktiv_Click" />
                         <CheckBox Name="kostenPerUnterKonto" Content="Kostensätze per Unter-Kategorie anzeigen" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" IsEnabled="False" />
-                        <CheckBox Name="unterKontoSummieren" Content="Gesamt-/verbleibende Summe pro Unterkategorie anzeigen" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" IsEnabled="False" />
+                        <CheckBox Name="unterKontoSummieren" Content="Gesamt-/verbleibende Summe pro Unterkategorie anzeigen" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" IsEnabled="False" />
                     </Grid>
                 </TabItem>
+				
                 <TabItem Name="einstellungenUpdates" Header="Updates" >
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -85,6 +87,7 @@
 							<TextBox Name="updateAlleXTage" Width="20" />
 							<Label Content=" Tage nach neuer Version prüfen" />
 						</DockPanel>
+						<Button Name="checkUpdate" Content="Jetzt nach Update suchen" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsEnabled="False" Click="checkUpdate_Click" />
                     </Grid>
                 </TabItem>
             </TabControl>

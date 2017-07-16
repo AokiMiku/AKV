@@ -68,11 +68,7 @@
 				Core.Updater updater = new Core.Updater();
 				if (updater.CheckForUpdate())
 				{
-					if (MessageBox.Show("Es ist eine neue Version verfügbar. Wollen Sie sie jetzt herunterladen und installieren?", "Update erforderlich", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-					{
-						Updater upd = new Updater();
-						upd.Start(updater);
-					}
+					this.Update(updater);
 				}
 			}
 
@@ -154,7 +150,7 @@
 
 				if (!konto.EoF)
 				{
-					if (konto.Saldo > 0)
+					if (konto.Saldo < 0)
 					{
 						this.betrag.Foreground = Brushes.Red;
 						this.verblBetrag.Foreground = Brushes.Red;
@@ -163,6 +159,10 @@
 					{
 						this.betrag.Foreground = Brushes.LightGreen;
 						this.verblBetrag.Foreground = Brushes.LightGreen;
+					}
+					if (!konto.Schuldkonto)
+					{
+						this.gesBetragContainer.Visibility = Visibility.Collapsed;
 					}
 					kontoCore.Name = konto.Name;
 					this.betrag.Content = konto.Saldo.ToString("0.00 €");
@@ -207,6 +207,11 @@
 							this.gesamtBetrag.Content = uKontoCore.GesamtBetrag().ToString("0.00 €");
 						}
 					}
+					else
+					{
+						this.editUnterKonto.IsEnabled = false;
+						this.delUnterKonto.IsEnabled = false;
+					}
 				}
 				else
 				{
@@ -236,7 +241,7 @@
 			KostensatzBezahlen bez = new KostensatzBezahlen(this);
 			bez.Start(((Kosten4Table)this.kosten.SelectedItem).Nummer);
 
-			if (bez.DialogResult == true)
+			if (bez.DialogResult.ToBoolean())
 				this.Actualize();
 		}
 
@@ -295,7 +300,7 @@
 			NeuesKonto kont = new NeuesKonto(this);
 			string name = kont.Start();
 
-			if (kont.DialogResult == true)
+			if (kont.DialogResult.ToBoolean())
 			{
 				this.ActualizeKonten();
 				this.konten.SelectedItem = name;
@@ -308,7 +313,7 @@
 			NeuesKonto kont = new NeuesKonto(this);
 			kont.Start(this.currentKonto_nr);
 
-			if (kont.DialogResult == true)
+			if (kont.DialogResult.ToBoolean())
 			{
 				this.ActualizeKonten();
 				this.konten.SelectedIndex = i;
@@ -335,7 +340,7 @@
 			NeuerKostensatz kost = new NeuerKostensatz(this);
 			kost.Start(this.currentKonto_nr, uKonto_nr: this.currentUnterKonto_nr);
 
-			if (kost.DialogResult == true)
+			if (kost.DialogResult.ToBoolean())
 				this.Actualize();
 		}
 
@@ -344,7 +349,7 @@
 			NeuerKostensatz kost = new NeuerKostensatz(this);
 			kost.Start(this.currentKonto_nr, ((Kosten4Table)this.kosten.SelectedItem).Nummer, this.currentUnterKonto_nr);
 
-			if (kost.DialogResult == true)
+			if (kost.DialogResult.ToBoolean())
 				this.Actualize();
 		}
 
@@ -370,7 +375,7 @@
 			NeuesUnterKonto kont = new NeuesUnterKonto(this);
 			string name = kont.Start(this.currentKonto_nr);
 
-			if (kont.DialogResult == true)
+			if (kont.DialogResult.ToBoolean())
 			{
 				int i = this.konten.SelectedIndex;
 				this.ActualizeKonten();
@@ -386,7 +391,7 @@
 			NeuesUnterKonto kont = new NeuesUnterKonto(this);
 			kont.Start(this.currentKonto_nr, this.currentUnterKonto_nr);
 
-			if (kont.DialogResult == true)
+			if (kont.DialogResult.ToBoolean())
 			{
 				this.ActualizeUnterKonten();
 				this.unterKonten.SelectedIndex = i;
@@ -437,7 +442,7 @@
 			Einstellungen einstellungen = new Einstellungen(this);
 			einstellungen.ShowDialog();
 
-			if (einstellungen.DialogResult == true)
+			if (einstellungen.DialogResult.ToBoolean())
 				this.Actualize();
 		}
 

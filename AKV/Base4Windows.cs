@@ -73,5 +73,14 @@
 					MessageBox.Show(this, ex.Message + Environment.NewLine + ex.StackTrace, "Fehler", MessageBoxButton.OK);
 			}
 		}
+
+		protected void Update(AKVCore.Core.Updater updater)
+		{
+			if (MessageBox.Show("Es ist eine neue Version verfügbar. Wollen Sie sie jetzt herunterladen und installieren?", "Update erforderlich", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+			{
+				Updater upd = new Updater();
+				upd.Start(updater);
+			}
+		}
 	}
 }

@@ -28,7 +28,7 @@
 
 		private void unterKontenAktiv_Click(object sender, RoutedEventArgs e)
 		{
-			if (this.unterKontenAktiv.IsChecked == true)
+			if (this.unterKontenAktiv.IsChecked.ToBoolean())
 			{
 				this.kostenPerUnterKonto.IsEnabled = true;
 				this.unterKontoSummieren.IsEnabled = true;
@@ -41,27 +41,29 @@
 		}
 		private void updateAktiv_Click(object sender, RoutedEventArgs e)
 		{
-			if (this.updateAktiv.IsChecked == true)
+			if (this.updateAktiv.IsChecked.ToBoolean())
 			{
 				this.updateTageContainer.IsEnabled = true;
+				this.checkUpdate.IsEnabled = true;
 			}
 			else
 			{
 				this.updateTageContainer.IsEnabled = false;
+				this.checkUpdate.IsEnabled = false;
 			}
 		}
 
 		private void speichern_Click(object sender, RoutedEventArgs e)
 		{
 			//Allgemein
-			UserSettings.BeimStartKontoOeffnen = this.beimStartKontoOeffnen.IsChecked == true;
-			UserSettings.ZeigeGesamtBetrag = this.zeigeGesamtBetrag.IsChecked == true;
+			UserSettings.BeimStartKontoOeffnen = this.beimStartKontoOeffnen.IsChecked.ToBoolean();
+			UserSettings.ZeigeGesamtBetrag = this.zeigeGesamtBetrag.IsChecked.ToBoolean();
 			//Unterkonten
-			UserSettings.UnterKonten = this.unterKontenAktiv.IsChecked == true;
-			UserSettings.KostenPerUnterKonto = this.kostenPerUnterKonto.IsChecked == true;
-			UserSettings.UnterKontoSummieren = this.unterKontoSummieren.IsChecked == true;
+			UserSettings.UnterKonten = this.unterKontenAktiv.IsChecked.ToBoolean();
+			UserSettings.KostenPerUnterKonto = this.kostenPerUnterKonto.IsChecked.ToBoolean();
+			UserSettings.UnterKontoSummieren = this.unterKontoSummieren.IsChecked.ToBoolean();
 			//Updates
-			UserSettings.Updates = this.updateAktiv.IsChecked == true;
+			UserSettings.Updates = this.updateAktiv.IsChecked.ToBoolean();
 			int tage = this.updateAlleXTage.Text.ToInt();
 			if (tage == 0)
 				tage = 1;
@@ -84,7 +86,7 @@
 			this.zeigeGesamtBetrag.IsChecked = UserSettings.ZeigeGesamtBetrag;
 			//Unterkonten
 			this.unterKontenAktiv.IsChecked = UserSettings.UnterKonten;
-			if (this.unterKontenAktiv.IsChecked == true)
+			if (this.unterKontenAktiv.IsChecked.ToBoolean())
 			{
 				this.kostenPerUnterKonto.IsEnabled = true;
 				this.unterKontoSummieren.IsEnabled = true;
@@ -93,11 +95,21 @@
 			this.unterKontoSummieren.IsChecked = UserSettings.UnterKontoSummieren;
 			//Updates
 			this.updateAktiv.IsChecked = UserSettings.Updates;
-			if (this.updateAktiv.IsChecked == true)
+			if (this.updateAktiv.IsChecked.ToBoolean())
 			{
 				this.updateTageContainer.IsEnabled = true;
+				this.checkUpdate.IsEnabled = true;
 			}
 			this.updateAlleXTage.Text = UserSettings.UpdateAlleXTage.ToString();
+		}
+
+		private void checkUpdate_Click(object sender, RoutedEventArgs e)
+		{
+			Core.Updater up = new Core.Updater();
+			if (up.CheckForUpdate())
+			{
+				this.Update(up);
+			}
 		}
 	}
 }

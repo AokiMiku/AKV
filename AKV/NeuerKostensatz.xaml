@@ -39,9 +39,11 @@
 
             <Label Content="Bezeichnung: " Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" />
             <TextBox Name="bezeichnung" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" KeyUp="Controls_KeyUp" />
-            <Label Content="Betrag: " Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" />
+            
+			<Label Content="Betrag: " Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" />
             <TextBox Name="betrag" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" KeyUp="Controls_KeyUp" />
-            <Label Content="Intervall: " Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" />
+            
+			<Label Content="Intervall: " Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" />
             <DockPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 <TextBox Name="intervall" Width="30" KeyUp="Controls_KeyUp" />
 				<Label Width="10" />
@@ -50,20 +52,26 @@
             
             <!--<Label Content="Bezahlt: " Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center" />
             <CheckBox Name="bezahlt" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" />-->
-            <Label Content="Bezahlt am: " Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Center" />
+            
+			<Label Content="Bezahlt am: " Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Center" />
             <DatePicker Name="bezahltAm" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Center" KeyUp="Controls_KeyUp" />
-            <Label Content="Bezahlen bis: " Grid.Column="0" Grid.Row="5" HorizontalAlignment="Right" VerticalAlignment="Center" />
+           
+			<Label Content="Bezahlen bis: " Grid.Column="0" Grid.Row="5" HorizontalAlignment="Right" VerticalAlignment="Center" />
             <DatePicker Name="laufzeitBis" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" KeyUp="Controls_KeyUp" />
-            <DockPanel Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" >
+            
+			<DockPanel Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" >
                 <RadioButton Name="ausgabe" Content="Ausgabe" />
                 <Label Width="10" />
                 <RadioButton Name="einnahme" Content="Einnahme" />
             </DockPanel>
-            <Label Name="unterKonto" Content="Unter-Kategorie:" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Right" VerticalAlignment="Center" />
+            
+			<Label Name="unterKonto" Content="Unter-Kategorie:" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Right" VerticalAlignment="Center" />
 			<ComboBox Name="unterKonten" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+			
 			<Label Content="Notizen: " Grid.Column="0" Grid.Row="8" HorizontalAlignment="Right" VerticalAlignment="Top" />
             <TextBox Name="notiz" Grid.Column="1" Grid.Row="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AcceptsReturn="True" AcceptsTab="True" AutoWordSelection="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" />
-            <DockPanel Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" Height="23" >
+            
+			<DockPanel Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" Height="23" >
                 <Button Name="speichern" Click="speichern_Click" >
                     <DockPanel>
                         <Image Source="Resources/Icons/save.ico" />

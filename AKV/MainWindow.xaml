@@ -139,6 +139,6 @@
 			
             <DataGrid Name="kosten" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" Grid.RowSpan="3" SelectionChanged="kosten_SelectionChanged" LoadingRow="kosten_LoadingRow" />
         </Grid>
-		<Label Name="version" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="8" />
+		<Label Name="version" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="8" />
     </Grid>
 </src:Base4Windows>

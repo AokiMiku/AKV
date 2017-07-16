@@ -114,9 +114,9 @@
 			if (this.laufzeitBis.SelectedDate != null)
 				laufzeitBis = (DateTime)this.laufzeitBis.SelectedDate;
 
-			if (this.einnahme.IsChecked == true)
+			if (this.einnahme.IsChecked.ToBoolean())
 				einnahme = true;
-			else if (this.ausgabe.IsChecked == true)
+			else if (this.ausgabe.IsChecked.ToBoolean())
 				einnahme = false;
 			else
 			{
@@ -167,6 +167,21 @@
 		{
 			this.kostenCore = new Core.KostenCore();
 			this.konto_nr = konto_nr;
+
+			using (Konto k = new Konto())
+			{
+				k.Where = "Nummer = " + this.konto_nr;
+				k.Read();
+
+				if (!k.EoF)
+				{
+					if (k.Schuldkonto)
+					{
+						this.ausgabe.Content = "Schulden hinzu";
+						this.einnahme.Content = "Schulden abbezahlen";
+					}
+				}
+			}
 
 			this.intervallEinheiten.Items.Add(IntervallEinheiten.AlleXTage.EinheitToString());
 			this.intervallEinheiten.Items.Add(IntervallEinheiten.AlleXWochen.EinheitToString());

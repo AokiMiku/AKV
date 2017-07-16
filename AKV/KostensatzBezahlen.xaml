@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AKV"
         mc:Ignorable="d"
-        Title="Kostensatz bezahlen" MinHeight="100" MinWidth="300" Height="0" Width="0">
+        Title="Kostensatz bezahlen" MinHeight="150" MinWidth="300" Height="0" Width="0">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10" />

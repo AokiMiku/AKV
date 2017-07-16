@@ -52,6 +52,11 @@
 			get { return this.GetString("NOTIZ"); }
 			set { this.Put("NOTIZ", value); }
 		}
+		public bool Schuldkonto
+		{
+			get { return this.GetBool("SCHULDKONTO"); }
+			set { this.Put("SCHULDKONTO", value); }
+		}
 		#endregion DbZugriffe
 	}
 }
