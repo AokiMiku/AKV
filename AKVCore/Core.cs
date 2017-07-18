@@ -23,7 +23,6 @@
 		#region public
 		public static event EventHandler<ErrorEventArgs> ErrorOccured;
 		public static Einstellungen CoreSettings = new Einstellungen();
-		public const string Version = "0.7.2";
 		#endregion public
 		#region private/protected
 
@@ -702,10 +701,7 @@
 				string version = update.GetString("AKV", "Version");
 				this.updateDownload = new Uri(update.GetString("AKV", "Link"));
                 Directory.Delete(Services.GetAppDir() + @"\Update", true);
-                if (version != Version)
-					return true;
-				else
-					return false;
+				return (version != Version.StringAppVersion);
             }
 
 			public void DownloadUpdateAsync()
@@ -744,6 +740,58 @@
 
 		#endregion private/protected
 		#endregion Methods
+	}
+
+	public static class Version
+	{
+		private static string appVersion = "0.0.0";
+
+		public static string StringAppVersion
+		{
+			get { return appVersion; }
+		}
+
+		public static string AppVersion
+		{
+			get { return "Version " + MajorVersion + "." + MinorVersion + "." + PatchNumber; }
+			set { appVersion = value; }
+		}
+		public static int MajorVersion
+		{
+			get { return appVersion.Substring(0, appVersion.IndexOf('.')).ToInt(); }
+			set
+			{
+				while (appVersion.IndexOf('.') != 0)
+				{
+					appVersion = appVersion.Remove(0, 1);
+				}
+				appVersion = value.ToString() + appVersion;
+			}
+		}
+		public static int MinorVersion
+		{
+			get { return appVersion.Substring(appVersion.IndexOf('.') + 1, appVersion.LastIndexOf('.') - (appVersion.IndexOf('.') + 1)).ToInt(); }
+			set
+			{
+				while (!appVersion.Contains(".."))
+				{
+					appVersion = appVersion.Remove(appVersion.IndexOf('.') + 1, 1);
+				}
+				appVersion = appVersion.Replace("..", "." + value.ToString() + ".");
+			}
+		}
+		public static int PatchNumber
+		{
+			get { return appVersion.Substring(appVersion.LastIndexOf('.') + 1).ToInt(); }
+			set
+			{
+				while (!appVersion.EndsWith("."))
+				{
+					appVersion = appVersion.Remove(appVersion.LastIndexOf('.') + 1, 1);
+				}
+				appVersion = appVersion + value.ToString();
+			}
+		}
 	}
 
 	public class ErrorEventArgs : ErrorInUpdate
