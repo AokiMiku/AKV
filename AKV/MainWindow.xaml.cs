@@ -32,9 +32,6 @@
 		{
 			InitializeComponent();
 			Core.Updater updater = new Core.Updater();
-			AKVCore.Version.MajorVersion = 0;
-			AKVCore.Version.MinorVersion = 7;
-			AKVCore.Version.PatchNumber = 2;
 
 			if (!Core.CoreSettings.GetSetting("Version02Updated").ToBoolean())
 			{
@@ -64,7 +61,7 @@
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			this.version.Content = AKVCore.Version.AppVersion;
+			this.version.Content = ApS.Version.AppVersion;
 
 			if (UserSettings.Updates && UserSettings.LetztesUpdateAm.AddDays(UserSettings.UpdateAlleXTage) <= DateTime.Now.Date)
 			{
