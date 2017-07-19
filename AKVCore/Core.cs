@@ -22,6 +22,7 @@
 		#region Fields/Properties
 		#region public
 		public static event EventHandler<ErrorEventArgs> ErrorOccured;
+		public static event EventHandler<EventArgs> SaveCompleted;
 		public static Einstellungen CoreSettings = new Einstellungen();
 		#endregion public
 		#region private/protected
@@ -69,6 +70,8 @@
 			public void Add()
 			{
 				Konto konto = new Konto();
+				konto.Async = true;
+				konto.AsyncCompleted += Konto_AsyncCompleted;
 				konto.Where = "Name = '" + this.Name + "'";
 				konto.Read();
 
@@ -77,7 +80,7 @@
 
 				konto.Name = this.Name;
 				konto.Saldo = this.Saldo;
-                konto.Gebuehren = this.Gebuehren;
+				konto.Gebuehren = this.Gebuehren;
 				konto.Zinsen_pa = this.ZinsenPA;
 				konto.Dispo_pa = this.DispoPA;
 				if (this.Schuldkonto)
@@ -90,13 +93,21 @@
 				else
 					ErrorOccured?.Invoke(this, new ErrorEventArgs("Es existiert bereits eine Kategorie mit diesem Namen!"));
 
-				konto.Save();
-
 				CoreSettings.SetSetting(this.Name + "_Gesamt", this.Saldo.DecToStr());
+
+				konto.Save();
 			}
+
+			private void Konto_AsyncCompleted(object sender, BusinessAsyncCompleted e)
+			{
+				Core.SaveCompleted?.Invoke(this, new EventArgs());
+			}
+
 			public void Delete(int konto_nr)
 			{
 				Konto konto = new Konto();
+				konto.Async = true;
+				konto.AsyncCompleted += Konto_AsyncCompleted;
 				konto.Where = "Nummer = " + konto_nr;
 				konto.Save(SqlAction.Delete);
 			}
@@ -117,6 +128,8 @@
 			public void Edit(int konto_nr)
 			{
 				Konto konto = new Konto();
+				konto.Async = true;
+				konto.AsyncCompleted += Konto_AsyncCompleted;
 				konto.Where = "Nummer = " + konto_nr;
 				konto.Read();
 
@@ -188,9 +201,11 @@
 						if (k.Schuldkonto && !this.Saldo.ToString().StartsWith("-"))
 							this.Saldo *= -1;
 					}
-                }
+				}
 
 				UnterKonto konto = new UnterKonto();
+				konto.Async = true;
+				konto.AsyncCompleted += Konto_AsyncCompleted;
 				konto.Where = "Name = '" + this.Name + "' AND Konto_Nr = " + this.Konto_Nr;
 				konto.Read();
 
@@ -203,13 +218,22 @@
 				else
 					ErrorOccured?.Invoke(this, new ErrorEventArgs("Es existiert bereits eine Unterkategorie mit diesem Namen zu diesem Konto!"));
 
+				CoreSettings.SetSetting(this.Name + "_Gesamt", this.Saldo.ToString());
+
 				konto.Save();
 
-				CoreSettings.SetSetting(this.Name + "_Gesamt", this.Saldo.ToString());
 			}
+
+			private void Konto_AsyncCompleted(object sender, BusinessAsyncCompleted e)
+			{
+				Core.SaveCompleted?.Invoke(this, new EventArgs());
+			}
+
 			public void Delete(int unterKonto_nr)
 			{
 				UnterKonto konto = new UnterKonto();
+				konto.Async = true;
+				konto.AsyncCompleted += Konto_AsyncCompleted;
 				konto.Where = "Nummer = " + unterKonto_nr;
 				konto.Save(SqlAction.Delete);
 			}
@@ -230,6 +254,8 @@
 			public void Edit(int unterKonto_nr)
 			{
 				UnterKonto konto = new UnterKonto();
+				konto.Async = true;
+				konto.AsyncCompleted += Konto_AsyncCompleted;
 				konto.Where = "Nummer = " + unterKonto_nr;
 				konto.Read();
 
@@ -291,6 +317,8 @@
 			public void Add(int konto_nr)
 			{
 				Kosten kosten = new Kosten();
+				kosten.Async = true;
+				kosten.AsyncCompleted += Kosten_AsyncCompleted;
 				kosten.Where = "Bezeichnung = '" + this.Bezeichnung + "' AND Konto_Nr = " + konto_nr;
 				kosten.Read();
 
@@ -333,6 +361,11 @@
 				}
 			}
 
+			private void Kosten_AsyncCompleted(object sender, BusinessAsyncCompleted e)
+			{
+				Core.SaveCompleted?.Invoke(this, new EventArgs());
+			}
+
 			public void Pay(int kosten_nr)
 			{
 				Kosten kosten = new Kosten();
@@ -350,6 +383,8 @@
 				kosten.Save(SqlAction.Update);
 
 				Konto konto = new Konto();
+				konto.Async = true;
+				konto.AsyncCompleted += Kosten_AsyncCompleted;
 				konto.Where = "Nummer = " + kosten.Konto_Nr;
 				konto.Read();
 
@@ -384,6 +419,8 @@
 			public void Delete(int kosten_nr)
 			{
 				Kosten kosten = new Kosten();
+				kosten.Async = true;
+				kosten.AsyncCompleted += Kosten_AsyncCompleted;
 				kosten.Where = "Nummer = " + kosten_nr;
 				kosten.Read();
 
@@ -432,6 +469,8 @@
 				kosten.Read();
 
 				Konto konto = new Konto();
+				konto.Async = true;
+				konto.AsyncCompleted += Kosten_AsyncCompleted;
 				konto.Where = "Nummer = " + kosten.Konto_Nr;
 				konto.Read();
 

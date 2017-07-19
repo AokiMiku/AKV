@@ -63,11 +63,16 @@
 			this.kontoCore.Saldo = sald;
 			this.kontoCore.Konto_Nr = this.konto_nr;
 
+			Core.SaveCompleted += Core_SaveCompleted;
 			if (this.modus == FensterModus.Neu)
 				this.kontoCore.Add();
 			else
 				this.kontoCore.Edit(this.unterKonto_nr);
 
+		}
+
+		private void Core_SaveCompleted(object sender, EventArgs e)
+		{
 			this.DialogResult = true;
 			this.Close();
 		}

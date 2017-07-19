@@ -42,8 +42,13 @@
 
 			this.kostenCore.BezahltAm = bezahltAm;
 
+			Core.SaveCompleted += Core_SaveCompleted;
 			this.kostenCore.Pay(this.kostenNr);
 
+		}
+
+		private void Core_SaveCompleted(object sender, EventArgs e)
+		{
 			this.DialogResult = true;
 			this.Close();
 		}
