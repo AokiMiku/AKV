@@ -31,32 +31,9 @@
 		public MainWindow()
 		{
 			InitializeComponent();
-			Core.Updater updater = new Core.Updater();
 
-			if (!Core.CoreSettings.GetSetting("Version02Updated").ToBoolean())
-			{
-				updater.UpdateDatabase(Versionen.Version02);
-			}
-			if (!Core.CoreSettings.GetSetting("Version05Updated").ToBoolean())
-			{
-				updater.UpdateDatabase(Versionen.Version05);
-			}
-			if (!Core.CoreSettings.GetSetting("Version06Updated").ToBoolean())
-			{
-				updater.UpdateDatabase(Versionen.Version06);
-			}
-			if (!Core.CoreSettings.GetSetting("Version06_1Updated").ToBoolean())
-			{
-				updater.UpdateDatabase(Versionen.Version06_1);
-			}
-			if (!Core.CoreSettings.GetSetting("Version07Updated").ToBoolean())
-			{
-				updater.UpdateDatabase(Versionen.Version07);
-			}
-			if (!Core.CoreSettings.GetSetting("Version07_2Updated").ToBoolean())
-			{
-				updater.UpdateDatabase(Versionen.Version07_2);
-			}
+			Core.Updater updater = new Core.Updater();
+			updater.UpdateDatabase();
 		}
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -217,7 +194,8 @@
 				{
 					this.kosten.Columns.Where(x => x.Header.ToString() == "UnterKategorie").First().Visibility = Visibility.Hidden;
 				}
-				this.kosten.Columns.Where(x => x.Header.ToString() == "Nummer").First().Visibility = Visibility.Hidden;
+				this.kosten.Columns.Where(x => x.Header.ToString() == "Nummer").First().SortDirection = System.ComponentModel.ListSortDirection.Descending;
+                this.kosten.Columns.Where(x => x.Header.ToString() == "Nummer").First().Visibility = Visibility.Hidden;
 			}
 			else
 			{

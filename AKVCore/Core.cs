@@ -568,7 +568,7 @@
 			public static void SetAllAsIntervall()
 			{
 				Kosten kosten = new Kosten();
-				kosten.Where = "Intervall <> -1 AND LaufzeitBis >= '" + DateTime.Now.ToShortDateString() + "' AND Bezahlt = 1";
+				kosten.Where = "Intervall <> -1 AND (EXTRACT(YEAR FROM LaufzeitBis) >= '" + DateTime.Now.Year + "' OR LaufzeitBis >= '" + DateTime.Now.AddMonths(-6) + "') AND Bezahlt = 1";
 				kosten.Read();
 
 				if (!kosten.EoF)
@@ -656,6 +656,33 @@
 			public event EventHandler<DownloadProgressChangedEventArgs> UpdateProgressChanged;
 			public event EventHandler<System.ComponentModel.AsyncCompletedEventArgs> DownloadCompleted;
 			private Uri updateDownload;
+			public void UpdateDatabase()
+			{
+				if (!Core.CoreSettings.GetSetting("Version02Updated").ToBoolean())
+				{
+					this.UpdateDatabase(Versionen.Version02);
+				}
+				if (!Core.CoreSettings.GetSetting("Version05Updated").ToBoolean())
+				{
+					this.UpdateDatabase(Versionen.Version05);
+				}
+				if (!Core.CoreSettings.GetSetting("Version06Updated").ToBoolean())
+				{
+					this.UpdateDatabase(Versionen.Version06);
+				}
+				if (!Core.CoreSettings.GetSetting("Version06_1Updated").ToBoolean())
+				{
+					this.UpdateDatabase(Versionen.Version06_1);
+				}
+				if (!Core.CoreSettings.GetSetting("Version07Updated").ToBoolean())
+				{
+					this.UpdateDatabase(Versionen.Version07);
+				}
+				if (!Core.CoreSettings.GetSetting("Version07_2Updated").ToBoolean())
+				{
+					this.UpdateDatabase(Versionen.Version07_2);
+				}
+			}
 
 			public void UpdateDatabase(Versionen vers)
 			{

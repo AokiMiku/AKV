@@ -73,8 +73,8 @@
 
 		private void Core_SaveCompleted(object sender, EventArgs e)
 		{
-			this.DialogResult = true;
-			this.Close();
+			this.Dispatcher.Invoke(() => this.DialogResult = true);
+			this.Dispatcher.Invoke(() => this.Close());
 		}
 
 		private void abbrechen_Click(object sender, RoutedEventArgs e)

@@ -79,6 +79,11 @@
 			get { return this.GetString("NOTIZ"); }
 			set { this.Put("NOTIZ", value); }
 		}
+		public bool IntervallErledigt
+		{
+			get { return this.GetBool("INTERVALLERLEDIGT"); }
+			set { this.Put("INTERVALLERLEDIGT", value); }
+		}
 		#endregion DbZugriffe
 	}
 
