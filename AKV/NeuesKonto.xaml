@@ -34,44 +34,28 @@
                 <RowDefinition />
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
-			
-			<Label Content="Bezeichnung: " Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" />
+
+            <Label Content="Bezeichnung: " Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" />
             <TextBox Name="name" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" KeyUp="Controls_KeyUp" />
-            
-			<Label Content="Betrag: " Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" />
+
+            <Label Content="Betrag: " Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" />
             <TextBox Name="saldo" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" KeyUp="Controls_KeyUp" />
-            
-			<Label Content="Gebühren: " Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" />
+
+            <Label Content="Gebühren: " Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" />
             <TextBox Name="gebuehren" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" KeyUp="Controls_KeyUp" />
-            
-			<Label Content="Zinsen p.a.: " Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center" />
+
+            <Label Content="Zinsen p.a.: " Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center" />
             <TextBox Name="zinsenPA" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" KeyUp="Controls_KeyUp" />
-            
-			<Label Content="Dispo p.a.: " Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Center" />
+
+            <Label Content="Dispo p.a.: " Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Center" />
             <TextBox Name="dispoPA" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Center" KeyUp="Controls_KeyUp" />
 
             <CheckBox Name="schuldenKonto" Content="Als Schuldenkonto verwenden" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" KeyUp="Controls_KeyUp" />
 
             <Label Content="Notizen: " Grid.Column="0" Grid.Row="6" HorizontalAlignment="Right" VerticalAlignment="Top" />
             <TextBox Name="notiz" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AcceptsReturn="True" AcceptsTab="True" AutoWordSelection="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" />
-            
-			<DockPanel Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" Height="23" >
-                <Button Name="speichern" Click="speichern_Click" >
-                    <DockPanel>
-                        <Image Source="Resources/Icons/save.ico" />
-                        <Label Width="3" />
-                        <TextBlock Text="Speichern" />
-                    </DockPanel>
-                </Button>
-                <Label Width="10" />
-                <Button Name="abbrechen" Click="abbrechen_Click" >
-                    <DockPanel>
-                        <Image Source="Resources/Icons/cancel.ico" />
-                        <Label Width="3" />
-                        <TextBlock Text="Abbrechen" />
-                    </DockPanel>
-                </Button>
-            </DockPanel>
+
+            <src:SaveCancel Speichern="speichern_Click" Abbrechen="abbrechen_Click" Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" Height="23"/>
 
         </Grid>
     </Grid>

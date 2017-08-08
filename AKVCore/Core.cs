@@ -70,8 +70,8 @@
 			public void Add()
 			{
 				Konto konto = new Konto();
-				konto.Async = true;
-				konto.AsyncCompleted += Konto_AsyncCompleted;
+				//konto.Async = true;
+				//konto.AsyncCompleted += Konto_AsyncCompleted;
 				konto.Where = "Name = '" + this.Name + "'";
 				konto.Read();
 
@@ -106,8 +106,8 @@
 			public void Delete(int konto_nr)
 			{
 				Konto konto = new Konto();
-				konto.Async = true;
-				konto.AsyncCompleted += Konto_AsyncCompleted;
+				//konto.Async = true;
+				//konto.AsyncCompleted += Konto_AsyncCompleted;
 				konto.Where = "Nummer = " + konto_nr;
 				konto.Save(SqlAction.Delete);
 			}
@@ -128,8 +128,8 @@
 			public void Edit(int konto_nr)
 			{
 				Konto konto = new Konto();
-				konto.Async = true;
-				konto.AsyncCompleted += Konto_AsyncCompleted;
+				//konto.Async = true;
+				//konto.AsyncCompleted += Konto_AsyncCompleted;
 				konto.Where = "Nummer = " + konto_nr;
 				konto.Read();
 
@@ -204,8 +204,8 @@
 				}
 
 				UnterKonto konto = new UnterKonto();
-				konto.Async = true;
-				konto.AsyncCompleted += Konto_AsyncCompleted;
+				//konto.Async = true;
+				//konto.AsyncCompleted += Konto_AsyncCompleted;
 				konto.Where = "Name = '" + this.Name + "' AND Konto_Nr = " + this.Konto_Nr;
 				konto.Read();
 
@@ -232,8 +232,8 @@
 			public void Delete(int unterKonto_nr)
 			{
 				UnterKonto konto = new UnterKonto();
-				konto.Async = true;
-				konto.AsyncCompleted += Konto_AsyncCompleted;
+				//konto.Async = true;
+				//konto.AsyncCompleted += Konto_AsyncCompleted;
 				konto.Where = "Nummer = " + unterKonto_nr;
 				konto.Save(SqlAction.Delete);
 			}
@@ -254,8 +254,8 @@
 			public void Edit(int unterKonto_nr)
 			{
 				UnterKonto konto = new UnterKonto();
-				konto.Async = true;
-				konto.AsyncCompleted += Konto_AsyncCompleted;
+				//konto.Async = true;
+				//konto.AsyncCompleted += Konto_AsyncCompleted;
 				konto.Where = "Nummer = " + unterKonto_nr;
 				konto.Read();
 
@@ -317,8 +317,8 @@
 			public void Add(int konto_nr)
 			{
 				Kosten kosten = new Kosten();
-				kosten.Async = true;
-				kosten.AsyncCompleted += Kosten_AsyncCompleted;
+				//kosten.Async = true;
+				//kosten.AsyncCompleted += Kosten_AsyncCompleted;
 				kosten.Where = "Bezeichnung = '" + this.Bezeichnung + "' AND Konto_Nr = " + konto_nr;
 				kosten.Read();
 
@@ -383,8 +383,8 @@
 				kosten.Save(SqlAction.Update);
 
 				Konto konto = new Konto();
-				konto.Async = true;
-				konto.AsyncCompleted += Kosten_AsyncCompleted;
+				//konto.Async = true;
+				//konto.AsyncCompleted += Kosten_AsyncCompleted;
 				konto.Where = "Nummer = " + kosten.Konto_Nr;
 				konto.Read();
 
@@ -419,8 +419,8 @@
 			public void Delete(int kosten_nr)
 			{
 				Kosten kosten = new Kosten();
-				kosten.Async = true;
-				kosten.AsyncCompleted += Kosten_AsyncCompleted;
+				//kosten.Async = true;
+				//kosten.AsyncCompleted += Kosten_AsyncCompleted;
 				kosten.Where = "Nummer = " + kosten_nr;
 				kosten.Read();
 
@@ -469,8 +469,8 @@
 				kosten.Read();
 
 				Konto konto = new Konto();
-				konto.Async = true;
-				konto.AsyncCompleted += Kosten_AsyncCompleted;
+				//konto.Async = true;
+				//konto.AsyncCompleted += Kosten_AsyncCompleted;
 				konto.Where = "Nummer = " + kosten.Konto_Nr;
 				konto.Read();
 

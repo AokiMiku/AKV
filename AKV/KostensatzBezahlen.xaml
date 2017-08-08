@@ -32,23 +32,7 @@
             <Label Content="Bezahlt am: " Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" />
             <DatePicker Name="bezahltAm" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" KeyUp="Controls_KeyUp" />
 
-            <DockPanel Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" Height="23" >
-                <Button Name="bezahlen" Click="bezahlen_Click" >
-                    <DockPanel>
-                        <Image Source="Resources/Icons/save.ico" />
-                        <Label Width="3" />
-                        <TextBlock Text="Bezahlen" />
-                    </DockPanel>
-                </Button>
-                <Label Width="10" />
-                <Button Name="abbrechen" Click="abbrechen_Click" >
-                    <DockPanel>
-                        <Image Source="Resources/Icons/cancel.ico" />
-                        <Label Width="3" />
-                        <TextBlock Text="Abbrechen" />
-                    </DockPanel>
-                </Button>
-            </DockPanel>
+            <src:SaveCancel Speichern="bezahlen_Click" Abbrechen="abbrechen_Click" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" Height="23"/>
         </Grid>
     </Grid>
 </src:Base4Windows>

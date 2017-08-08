@@ -98,18 +98,21 @@
 			this.kontoCore.Notiz = this.notiz.Text;
 			this.kontoCore.Schuldkonto = this.schuldenKonto.IsChecked.ToBoolean();
 
-			Core.SaveCompleted += Core_SaveCompleted;
+			//Core.SaveCompleted += Core_SaveCompleted;
 			if (this.modus == FensterModus.Neu)
 				this.kontoCore.Add();
 			else
 				this.kontoCore.Edit(this.konto_nr);
-
+			this.DialogResult = true;
+			this.Close();
 		}
 
 		private void Core_SaveCompleted(object sender, EventArgs e)
 		{
 			this.Dispatcher.Invoke(() => this.DialogResult = true);
 			this.Dispatcher.Invoke(() => this.Close());
+			Core.SaveCompleted -= Core_SaveCompleted;
+
 		}
 
 		private void abbrechen_Click(object sender, RoutedEventArgs e)

@@ -148,18 +148,20 @@
 			this.kostenCore.Notiz = this.notiz.Text;
 			this.kostenCore.UnterKonto_Nr = unterKonto_nr;
 
-			Core.SaveCompleted += Core_SaveCompleted;
+			//Core.SaveCompleted += Core_SaveCompleted;
 			if (this.modus == FensterModus.Neu)
 				this.kostenCore.Add(this.konto_nr);
 			else
 				this.kostenCore.Edit(this.kosten_nr);
-
+			this.DialogResult = true;
+			this.Close();
 		}
 
 		private void Core_SaveCompleted(object sender, EventArgs e)
 		{
 			this.Dispatcher.Invoke(() => this.DialogResult = true);
 			this.Dispatcher.Invoke(() => this.Close());
+			Core.SaveCompleted -= Core_SaveCompleted;
 		}
 
 		private void abbrechen_Click(object sender, RoutedEventArgs e)

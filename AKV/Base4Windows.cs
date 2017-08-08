@@ -2,6 +2,8 @@
 {
 	using System;
 	using System.Windows;
+	using System.Windows.Input;
+	using System.Windows.Controls;
 	using System.Windows.Media.Imaging;
 
 	public class Base4Windows : Window
@@ -31,6 +33,16 @@
 			this.Icon = appIcon;
 
 			this.core = new AKVCore.Core();
+
+			this.KeyDown += Base4Windows_KeyDown;
+		}
+
+		private void Base4Windows_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+		{
+			if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.S)
+			{
+				((Button)this.FindName("speichern"))?.PerformClick();
+			}
 		}
 
 		private void Core_ErrorOccured(object sender, AKVCore.ErrorEventArgs e)

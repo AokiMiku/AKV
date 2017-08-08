@@ -4,7 +4,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AKV"
         mc:Ignorable="d"
         Title="Einstellungen" MinHeight="200" MinWidth="700" Height="0" Width="0" Loaded="Base4Windows_Loaded" >
     <Grid>
@@ -94,23 +93,7 @@
 
             <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center">
                 <Label Height="10" />
-                <DockPanel Height="23" >
-                    <Button Name="speichern" Click="speichern_Click" >
-                        <DockPanel>
-                            <Image Source="Resources/Icons/save.ico" />
-                            <Label Width="3" />
-                            <TextBlock Text="Speichern" />
-                        </DockPanel>
-                    </Button>
-                    <Label Width="10" />
-                    <Button Name="abbrechen" Click="abbrechen_Click" >
-                        <DockPanel>
-                            <Image Source="Resources/Icons/cancel.ico" />
-                            <Label Width="3" />
-                            <TextBlock Text="Abbrechen" />
-                        </DockPanel>
-                    </Button>
-                </DockPanel>
+                <src:SaveCancel Speichern="speichern_Click" Abbrechen="abbrechen_Click" />
             </StackPanel>
             
         </Grid>
