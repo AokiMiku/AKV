@@ -2,3 +2,4 @@ AKV/bin/
 AKV/obj/
 AKVCore/bin/
 AKVCore/obj/
+*.exe
