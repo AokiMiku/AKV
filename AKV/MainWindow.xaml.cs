@@ -49,9 +49,11 @@
 				}
 			}
 
-			Initializer init = new Initializer();
-			init.Top = (this.Top + this.Height / 2) - 50;
-			init.Left = (this.Left + this.Width / 2) - 250;
+			Initializer init = new Initializer
+			{
+				Top = (this.Top + this.Height / 2) - 50,
+				Left = (this.Left + this.Width / 2) - 250
+			};
 			init.ShowDialog();
 
 			this.ActualizeKonten();
@@ -79,8 +81,10 @@
 		{
 			object select = this.unterKonten.SelectedItem;
 			this.unterKonten.Items.Clear();
-			Core.UnterKontoCore core = new Core.UnterKontoCore();
-			core.Konto_Nr = this.currentKonto_nr;
+			Core.UnterKontoCore core = new Core.UnterKontoCore
+			{
+				Konto_Nr = this.currentKonto_nr
+			};
 			UnterKonto konto = core.GetAlleKonten();
 			while (!konto.EoF)
 			{
@@ -121,8 +125,10 @@
 				this.kosten.ItemsSource = kontoCore.GetAlleKosten(this.currentKonto_nr);
 				this.addKosten.IsEnabled = true;
 
-				Konto konto = new Konto();
-				konto.Where = "Nummer = " + this.currentKonto_nr;
+				Konto konto = new Konto
+				{
+					Where = "Nummer = " + this.currentKonto_nr
+				};
 				konto.Read();
 
 				if (!konto.EoF)
@@ -162,8 +168,10 @@
 
 						if (UserSettings.UnterKontoSummieren)
 						{
-							UnterKonto uKonto = new UnterKonto();
-							uKonto.Where = "Nummer = " + this.currentUnterKonto_nr;
+							UnterKonto uKonto = new UnterKonto
+							{
+								Where = "Nummer = " + this.currentUnterKonto_nr
+							};
 							uKonto.Read();
 
 							if (!uKonto.EoF)
@@ -242,8 +250,10 @@
 		{
 			if (this.konten.SelectedItem != null)
 			{
-				Konto konto = new Konto();
-				konto.Where = "Name = '" + this.konten.SelectedItem + "'";
+				Konto konto = new Konto
+				{
+					Where = "Name = '" + this.konten.SelectedItem + "'"
+				};
 				konto.Read();
 
 				this.currentKonto_nr = konto.Nummer;
@@ -263,13 +273,19 @@
 		{
 			if (this.unterKonten.SelectedItem != null)
 			{
-				UnterKonto konto = new UnterKonto();
-				konto.Where = "Name = '" + this.unterKonten.SelectedItem + "'";
+				UnterKonto konto = new UnterKonto
+				{
+					Where = "Name = '" + this.unterKonten.SelectedItem + "' AND Konto_Nr = " + this.currentKonto_nr
+				};
 				konto.Read();
 
 				this.currentUnterKonto_nr = konto.Nummer;
 
 				this.Actualize();
+			}
+			else
+			{
+				this.currentUnterKonto_nr = -1;
 			}
 		}
 

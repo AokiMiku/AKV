@@ -3,3 +3,7 @@ AKV/obj/
 AKVCore/bin/
 AKVCore/obj/
 *.exe
+*.ide-wal
+*.ide-shm
+*.ide
+*.lock

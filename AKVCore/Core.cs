@@ -33,12 +33,14 @@
 		#region Constructors
 		public Core()
 		{
-			FbConnectionStringBuilder fbConnString = new FbConnectionStringBuilder();
-			fbConnString.ServerType = FbServerType.Embedded;
-			fbConnString.UserID = "Melissa";
-			fbConnString.Password = " ";
+			FbConnectionStringBuilder fbConnString = new FbConnectionStringBuilder
+			{
+				ServerType = FbServerType.Embedded,
+				UserID = "Melissa",
+				Password = " ",
 
-			fbConnString.Database = Services.GetAppDir() + @"\Daten\AKV.fdb";
+				Database = Services.GetAppDir() + @"\Daten\AKV.fdb"
+			};
 			ApS.Settings.ConnectionString = fbConnString.ToString();
 
 			if (File.Exists(Services.GetAppDir() + @"\Update.exe"))
@@ -60,8 +62,10 @@
 
 			public Konto GetAlleKonten()
 			{
-				Konto konto = new Konto();
-				konto.Where = "Nummer is not null";
+				Konto konto = new Konto
+				{
+					Where = "Nummer is not null"
+				};
 				konto.Read();
 
 				return konto;
@@ -69,10 +73,12 @@
 
 			public void Add()
 			{
-				Konto konto = new Konto();
-				//konto.Async = true;
-				//konto.AsyncCompleted += Konto_AsyncCompleted;
-				konto.Where = "Name = '" + this.Name + "'";
+				Konto konto = new Konto
+				{
+					//Async = true;
+					//AsyncCompleted += Konto_AsyncCompleted;
+					Where = "Name = '" + this.Name + "'"
+				};
 				konto.Read();
 
 				if (this.Schuldkonto && !this.Saldo.ToString().StartsWith("-"))
@@ -105,10 +111,12 @@
 
 			public void Delete(int konto_nr)
 			{
-				Konto konto = new Konto();
-				//konto.Async = true;
-				//konto.AsyncCompleted += Konto_AsyncCompleted;
-				konto.Where = "Nummer = " + konto_nr;
+				Konto konto = new Konto
+				{
+					//Async = true;
+					//AsyncCompleted += Konto_AsyncCompleted;
+					Where = "Nummer = " + konto_nr
+				};
 				konto.Save(SqlAction.Delete);
 			}
 
@@ -127,10 +135,12 @@
 
 			public void Edit(int konto_nr)
 			{
-				Konto konto = new Konto();
-				//konto.Async = true;
-				//konto.AsyncCompleted += Konto_AsyncCompleted;
-				konto.Where = "Nummer = " + konto_nr;
+				Konto konto = new Konto
+				{
+					//Async = true;
+					//AsyncCompleted += Konto_AsyncCompleted;
+					Where = "Nummer = " + konto_nr
+				};
 				konto.Read();
 
 				if (this.Schuldkonto && !this.Saldo.ToString().StartsWith("-"))
@@ -153,8 +163,10 @@
 			{
 				List<Kosten4Table> rtn = new List<Kosten4Table>();
 
-				Kosten kosten = new Kosten();
-				kosten.Where = "Konto_Nr = " + konto_nr;
+				Kosten kosten = new Kosten
+				{
+					Where = "Konto_Nr = " + konto_nr
+				};
 				kosten.Read();
 
 				while (!kosten.EoF)
@@ -176,8 +188,10 @@
 
 			public UnterKonto GetAlleKonten()
 			{
-				UnterKonto konto = new UnterKonto();
-				konto.Where = "Konto_Nr = " + this.Konto_Nr;
+				UnterKonto konto = new UnterKonto
+				{
+					Where = "Konto_Nr = " + this.Konto_Nr
+				};
 				konto.Read();
 
 				return konto;
@@ -203,10 +217,12 @@
 					}
 				}
 
-				UnterKonto konto = new UnterKonto();
-				//konto.Async = true;
-				//konto.AsyncCompleted += Konto_AsyncCompleted;
-				konto.Where = "Name = '" + this.Name + "' AND Konto_Nr = " + this.Konto_Nr;
+				UnterKonto konto = new UnterKonto
+				{
+					//Async = true;
+					//AsyncCompleted += Konto_AsyncCompleted;
+					Where = "Name = '" + this.Name + "' AND Konto_Nr = " + this.Konto_Nr
+				};
 				konto.Read();
 
 				konto.Name = this.Name;
@@ -231,10 +247,12 @@
 
 			public void Delete(int unterKonto_nr)
 			{
-				UnterKonto konto = new UnterKonto();
-				//konto.Async = true;
-				//konto.AsyncCompleted += Konto_AsyncCompleted;
-				konto.Where = "Nummer = " + unterKonto_nr;
+				UnterKonto konto = new UnterKonto
+				{
+					//Async = true;
+					//AsyncCompleted += Konto_AsyncCompleted;
+					Where = "Nummer = " + unterKonto_nr
+				};
 				konto.Save(SqlAction.Delete);
 			}
 
@@ -253,10 +271,12 @@
 
 			public void Edit(int unterKonto_nr)
 			{
-				UnterKonto konto = new UnterKonto();
-				//konto.Async = true;
-				//konto.AsyncCompleted += Konto_AsyncCompleted;
-				konto.Where = "Nummer = " + unterKonto_nr;
+				UnterKonto konto = new UnterKonto
+				{
+					//Async = true;
+					//AsyncCompleted += Konto_AsyncCompleted;
+					Where = "Nummer = " + unterKonto_nr
+				};
 				konto.Read();
 
 				using (Konto k = new Konto())
@@ -283,8 +303,10 @@
 			{
 				List<Kosten4Table> rtn = new List<Kosten4Table>();
 
-				Kosten kosten = new Kosten();
-				kosten.Where = "UnterKonto_Nr = " + unterKonto_nr;
+				Kosten kosten = new Kosten
+				{
+					Where = "UnterKonto_Nr = " + unterKonto_nr
+				};
 				kosten.Read();
 
 				while (!kosten.EoF)
@@ -316,10 +338,12 @@
 
 			public void Add(int konto_nr)
 			{
-				Kosten kosten = new Kosten();
-				//kosten.Async = true;
-				//kosten.AsyncCompleted += Kosten_AsyncCompleted;
-				kosten.Where = "Bezeichnung = '" + this.Bezeichnung + "' AND Konto_Nr = " + konto_nr;
+				Kosten kosten = new Kosten
+				{
+					//kosten.Async = true;
+					//kosten.AsyncCompleted += Kosten_AsyncCompleted;
+					Where = "Bezeichnung = '" + this.Bezeichnung + "' AND Konto_Nr = " + konto_nr
+				};
 				kosten.Read();
 
 				if (!kosten.EoF)
@@ -368,8 +392,10 @@
 
 			public void Pay(int kosten_nr)
 			{
-				Kosten kosten = new Kosten();
-				kosten.Where = "Nummer = " + kosten_nr;
+				Kosten kosten = new Kosten
+				{
+					Where = "Nummer = " + kosten_nr
+				};
 				kosten.Read();
 
 				if (kosten.EoF)
@@ -382,17 +408,21 @@
 				kosten.BezahltAm = this.BezahltAm;
 				kosten.Save(SqlAction.Update);
 
-				Konto konto = new Konto();
-				//konto.Async = true;
-				//konto.AsyncCompleted += Kosten_AsyncCompleted;
-				konto.Where = "Nummer = " + kosten.Konto_Nr;
+				Konto konto = new Konto
+				{
+					//konto.Async = true;
+					//konto.AsyncCompleted += Kosten_AsyncCompleted;
+					Where = "Nummer = " + kosten.Konto_Nr
+				};
 				konto.Read();
 
 				UnterKonto uKonto = null;
 				if (kosten.UnterKonto_Nr != 0)
 				{
-					uKonto = new UnterKonto();
-					uKonto.Where = "Nummer = " + kosten.UnterKonto_Nr;
+					uKonto = new UnterKonto
+					{
+						Where = "Nummer = " + kosten.UnterKonto_Nr
+					};
 					uKonto.Read();
 				}
 
@@ -418,24 +448,30 @@
 
 			public void Delete(int kosten_nr)
 			{
-				Kosten kosten = new Kosten();
-				//kosten.Async = true;
-				//kosten.AsyncCompleted += Kosten_AsyncCompleted;
-				kosten.Where = "Nummer = " + kosten_nr;
+				Kosten kosten = new Kosten
+				{
+					//Async = true;
+					//AsyncCompleted += Kosten_AsyncCompleted;
+					Where = "Nummer = " + kosten_nr
+				};
 				kosten.Read();
 
 
 				if (kosten.Bezahlt)
 				{
-					Konto konto = new Konto();
-					konto.Where = "Nummer = " + kosten.Konto_Nr;
+					Konto konto = new Konto
+					{
+						Where = "Nummer = " + kosten.Konto_Nr
+					};
 					konto.Read();
 
 					UnterKonto uKonto = null;
 					if (kosten.UnterKonto_Nr != 0)
 					{
-						uKonto = new UnterKonto();
-						uKonto.Where = "Nummer = " + kosten.UnterKonto_Nr;
+						uKonto = new UnterKonto
+						{
+							Where = "Nummer = " + kosten.UnterKonto_Nr
+						};
 						uKonto.Read();
 					}
 
@@ -464,21 +500,27 @@
 
 			public void Edit(int kosten_nr)
 			{
-				Kosten kosten = new Kosten();
-				kosten.Where = "Nummer = " + kosten_nr;
+				Kosten kosten = new Kosten
+				{
+					Where = "Nummer = " + kosten_nr
+				};
 				kosten.Read();
 
-				Konto konto = new Konto();
-				//konto.Async = true;
-				//konto.AsyncCompleted += Kosten_AsyncCompleted;
-				konto.Where = "Nummer = " + kosten.Konto_Nr;
+				Konto konto = new Konto
+				{
+					//Async = true;
+					//AsyncCompleted += Kosten_AsyncCompleted;
+					Where = "Nummer = " + kosten.Konto_Nr
+				};
 				konto.Read();
 
 				UnterKonto uKonto = null;
 				if (kosten.UnterKonto_Nr != 0)
 				{
-					uKonto = new UnterKonto();
-					uKonto.Where = "Nummer = " + kosten.UnterKonto_Nr;
+					uKonto = new UnterKonto
+					{
+						Where = "Nummer = " + kosten.UnterKonto_Nr
+					};
 					uKonto.Read();
 				}
 
@@ -549,8 +591,10 @@
 
 			public int GetUnterKontoNummer(int konto_nr, string unterKontoName)
 			{
-				UnterKonto konto = new UnterKonto();
-				konto.Where = "Konto_Nr = " + konto_nr + " AND Name = '" + unterKontoName + "'";
+				UnterKonto konto = new UnterKonto
+				{
+					Where = "Konto_Nr = " + konto_nr + " AND Name = '" + unterKontoName + "'"
+				};
 				konto.Read();
 
 				if (!konto.EoF)
@@ -567,8 +611,10 @@
 
 			public static void SetAllAsIntervall()
 			{
-				Kosten kosten = new Kosten();
-				kosten.Where = "Intervall <> -1 AND (EXTRACT(YEAR FROM LaufzeitBis) >= '" + DateTime.Now.Year + "' OR LaufzeitBis >= '" + DateTime.Now.AddMonths(-6) + "') AND Bezahlt = 1";
+				Kosten kosten = new Kosten
+				{
+					Where = "Intervall <> -1 AND (EXTRACT(YEAR FROM LaufzeitBis) >= '" + DateTime.Now.Year + "' OR LaufzeitBis >= '" + DateTime.Now.AddMonths(-6).ToShortDateString() + "') AND Bezahlt = 1"
+				};
 				kosten.Read();
 
 				if (!kosten.EoF)
