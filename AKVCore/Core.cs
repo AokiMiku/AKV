@@ -181,7 +181,6 @@
 
 		public class UnterKontoCore
 		{
-
 			public string Name = "";
 			public decimal Saldo = 0;
 			public int Konto_Nr = 0;
@@ -237,7 +236,6 @@
 				CoreSettings.SetSetting(this.Name + "_Gesamt", this.Saldo.ToString());
 
 				konto.Save();
-
 			}
 
 			private void Konto_AsyncCompleted(object sender, BusinessAsyncCompleted e)
@@ -447,7 +445,6 @@
 				};
 				kosten.Read();
 
-
 				if (kosten.Bezahlt)
 				{
 					ReadData(kosten, out Konto konto, out UnterKonto uKonto);
@@ -470,7 +467,6 @@
 					SaveKonto(konto, uKonto);
 				}
 				kosten.Save(SqlAction.Delete);
-
 			}
 
 			private static void SaveKonto(Konto konto, UnterKonto uKonto)
@@ -511,27 +507,11 @@
 
 				if (kosten.Bezahlt)
 				{
-					if (kosten.Einnahme)
-					{
-						konto.Saldo = konto.Saldo - kosten.Betrag;
-						if (uKonto != null && uKonto.RecordCount == 1)
-							uKonto.Saldo = uKonto.Saldo - kosten.Betrag;
-					}
-					else
-					{
-						konto.Saldo = konto.Saldo + kosten.Betrag;
-						if (uKonto != null && uKonto.RecordCount == 1)
-							uKonto.Saldo = uKonto.Saldo + kosten.Betrag;
-					}
+					BackSaldieren(kosten, konto, uKonto);
 					konto.Save(SqlAction.Update);
 					konto.Read();
-					if (uKonto != null && uKonto.RecordCount == 1)
-					{
-						uKonto.Save(SqlAction.Update);
-						uKonto.Read();
-					}
+					SaveUKonto(uKonto);
 				}
-
 
 				kosten.Bezeichnung = this.Bezeichnung;
 				kosten.Betrag = this.Betrag;
@@ -540,10 +520,7 @@
 				kosten.Intervall = this.Intervall;
 				kosten.IntervallEinheit = (int)IntervallEinheit;
 				kosten.Bezahlt = this.Bezahlt;
-				if (string.IsNullOrEmpty(this.Notiz))
-					kosten.Notiz = null;
-				else
-					kosten.Notiz = this.Notiz;
+				kosten.Notiz = this.Notiz;
 				kosten.Einnahme = this.Einnahme;
 				if (this.UnterKonto_Nr != -1)
 					kosten.UnterKonto_Nr = this.UnterKonto_Nr;
@@ -555,6 +532,31 @@
 				{
 					Saldieren(kosten, konto, uKonto);
 					SaveKonto(konto, uKonto);
+				}
+			}
+
+			private static void SaveUKonto(UnterKonto uKonto)
+			{
+				if (uKonto != null && uKonto.RecordCount == 1)
+				{
+					uKonto.Save(SqlAction.Update);
+					uKonto.Read();
+				}
+			}
+
+			private static void BackSaldieren(Kosten kosten, Konto konto, UnterKonto uKonto)
+			{
+				if (kosten.Einnahme)
+				{
+					konto.Saldo = konto.Saldo - kosten.Betrag;
+					if (uKonto != null && uKonto.RecordCount == 1)
+						uKonto.Saldo = uKonto.Saldo - kosten.Betrag;
+				}
+				else
+				{
+					konto.Saldo = konto.Saldo + kosten.Betrag;
+					if (uKonto != null && uKonto.RecordCount == 1)
+						uKonto.Saldo = uKonto.Saldo + kosten.Betrag;
 				}
 			}
 
@@ -663,7 +665,6 @@
 						ProgressChanged?.Invoke(null, new ProgressEventArgs(++progressCurrentValue, kosten.RecordCount));
 						kosten.Skip();
 					}
-
 				}
 				InitilizationFinished?.Invoke(null, new EventArgs());
 			}
