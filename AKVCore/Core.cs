@@ -407,8 +407,18 @@
 				kosten.Bezahlt = true;
 				kosten.BezahltAm = this.BezahltAm;
 				kosten.Save(SqlAction.Update);
+				ReadData(kosten, out Konto konto, out UnterKonto uKonto);
 
-				Konto konto = new Konto
+				if (!konto.EoF)
+				{
+					Saldieren(kosten, konto, uKonto);
+				}
+				SaveKonto(konto, uKonto);
+			}
+
+			private static void ReadData(Kosten kosten, out Konto konto, out UnterKonto uKonto)
+			{
+				konto = new Konto
 				{
 					//konto.Async = true;
 					//konto.AsyncCompleted += Kosten_AsyncCompleted;
@@ -416,7 +426,7 @@
 				};
 				konto.Read();
 
-				UnterKonto uKonto = null;
+				uKonto = null;
 				if (kosten.UnterKonto_Nr != 0)
 				{
 					uKonto = new UnterKonto
@@ -425,25 +435,6 @@
 					};
 					uKonto.Read();
 				}
-
-				if (!konto.EoF)
-				{
-					if (kosten.Einnahme)
-					{
-						konto.Saldo = konto.Saldo + kosten.Betrag;
-						if (uKonto != null && uKonto.RecordCount == 1)
-							uKonto.Saldo = uKonto.Saldo + kosten.Betrag;
-					}
-					else
-					{
-						konto.Saldo = konto.Saldo - kosten.Betrag;
-						if (uKonto != null && uKonto.RecordCount == 1)
-							uKonto.Saldo = uKonto.Saldo - kosten.Betrag;
-					}
-				}
-				konto.Save(SqlAction.Update);
-				if (uKonto != null && uKonto.RecordCount == 1)
-					uKonto.Save(SqlAction.Update);
 			}
 
 			public void Delete(int kosten_nr)
@@ -459,21 +450,7 @@
 
 				if (kosten.Bezahlt)
 				{
-					Konto konto = new Konto
-					{
-						Where = "Nummer = " + kosten.Konto_Nr
-					};
-					konto.Read();
-
-					UnterKonto uKonto = null;
-					if (kosten.UnterKonto_Nr != 0)
-					{
-						uKonto = new UnterKonto
-						{
-							Where = "Nummer = " + kosten.UnterKonto_Nr
-						};
-						uKonto.Read();
-					}
+					ReadData(kosten, out Konto konto, out UnterKonto uKonto);
 
 					if (!konto.EoF)
 					{
@@ -490,12 +467,17 @@
 								uKonto.Saldo = uKonto.Saldo + kosten.Betrag;
 						}
 					}
-					konto.Save(SqlAction.Update);
-					if (uKonto != null && uKonto.RecordCount == 1)
-						uKonto.Save(SqlAction.Update);
+					SaveKonto(konto, uKonto);
 				}
 				kosten.Save(SqlAction.Delete);
 
+			}
+
+			private static void SaveKonto(Konto konto, UnterKonto uKonto)
+			{
+				konto.Save(SqlAction.Update);
+				if (uKonto != null && uKonto.RecordCount == 1)
+					uKonto.Save(SqlAction.Update);
 			}
 
 			public void Edit(int kosten_nr)
@@ -571,21 +553,24 @@
 
 				if (kosten.Bezahlt)
 				{
-					if (kosten.Einnahme)
-					{
-						konto.Saldo = konto.Saldo + kosten.Betrag;
-						if (uKonto != null && uKonto.RecordCount == 1)
-							uKonto.Saldo = uKonto.Saldo + kosten.Betrag;
-					}
-					else
-					{
-						konto.Saldo = konto.Saldo - kosten.Betrag;
-						if (uKonto != null && uKonto.RecordCount == 1)
-							uKonto.Saldo = uKonto.Saldo - kosten.Betrag;
-					}
-					konto.Save(SqlAction.Update);
+					Saldieren(kosten, konto, uKonto);
+					SaveKonto(konto, uKonto);
+				}
+			}
+
+			private static void Saldieren(Kosten kosten, Konto konto, UnterKonto uKonto)
+			{
+				if (kosten.Einnahme)
+				{
+					konto.Saldo = konto.Saldo + kosten.Betrag;
 					if (uKonto != null && uKonto.RecordCount == 1)
-						uKonto.Save(SqlAction.Update);
+						uKonto.Saldo = uKonto.Saldo + kosten.Betrag;
+				}
+				else
+				{
+					konto.Saldo = konto.Saldo - kosten.Betrag;
+					if (uKonto != null && uKonto.RecordCount == 1)
+						uKonto.Saldo = uKonto.Saldo - kosten.Betrag;
 				}
 			}
 
@@ -852,26 +837,6 @@
 
 		#endregion private/protected
 		#endregion Methods
-	}
-
-	public class ErrorEventArgs : ErrorInUpdate
-	{
-		public ErrorEventArgs(string errorMsg) : base(errorMsg)
-		{
-
-		}
-	}
-
-	public class ProgressEventArgs : EventArgs
-	{
-		public int ProgressMaxValue { get; protected set; }
-		public int ProgressCurrentValue { get; protected set; }
-
-		public ProgressEventArgs(int ProgressCurrentValue, int ProgressMaxValue)
-		{
-			this.ProgressCurrentValue = ProgressCurrentValue;
-			this.ProgressMaxValue = ProgressMaxValue;
-		}
 	}
 
 	public enum Versionen
