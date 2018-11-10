@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ApS.Firebird;
+using ApS.Databases;
+using ApS.Databases.Firebird;
 
 namespace AKVCore
 {
-	public class Business : ApS.Firebird.Business
+	public class Business : ApS.Databases.Firebird.Business
 	{
 		#region Felder
 
@@ -18,7 +19,7 @@ namespace AKVCore
 		{
 
 		}
-		public Business(string tabelle, string where, string spalten, string orderBy, string groupBy, ApS.SqlAction action) : this(tabelle)
+		public Business(string tabelle, string where, string spalten, string orderBy, string groupBy, SqlAction action) : this(tabelle)
 		{
 			this.Where = where;
 			this.spalten = spalten;

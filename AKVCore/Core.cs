@@ -14,7 +14,8 @@
 	using System.IO.Compression;
 
 	using ApS;
-	using ApS.Firebird;
+	using ApS.Databases;
+	using ApS.Databases.Firebird;
 	using FirebirdSql.Data.FirebirdClient;
 
 	public class Core
@@ -41,7 +42,7 @@
 
 				Database = Services.GetAppDir() + @"\Daten\AKV.fdb"
 			};
-			ApS.Settings.ConnectionString = fbConnString.ToString();
+			ApS.Databases.Settings.ConnectionString = fbConnString.ToString();
 
 			if (File.Exists(Services.GetAppDir() + @"\Update.exe"))
 				File.Delete(Services.GetAppDir() + @"\Update.exe");

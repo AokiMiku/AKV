@@ -1,23 +1,24 @@
 ﻿namespace AKVCore
 {
 	using System;
+	using ApS.Databases;
 
 	public class Kosten : Business
 	{
 		#region Konstruktoren
-		public Kosten() : base("Kosten", "", "", "", "", ApS.SqlAction.Null)
+		public Kosten() : base("Kosten", "", "", "", "", SqlAction.Null)
 		{
 
 		}
-		public Kosten(string where, ApS.SqlAction action) : base("Kosten", where, "", "", "", action)
+		public Kosten(string where, SqlAction action) : base("Kosten", where, "", "", "", action)
 		{
 
 		}
-		public Kosten(string where, string spalten, ApS.SqlAction action) : base("Kosten", where, spalten, "", "", action)
+		public Kosten(string where, string spalten, SqlAction action) : base("Kosten", where, spalten, "", "", action)
 		{
 
 		}
-		public Kosten(string where, string spalten, string orderBy, string groupBy, ApS.SqlAction action) : base("Kosten", where, spalten, orderBy, groupBy, action)
+		public Kosten(string where, string spalten, string orderBy, string groupBy, SqlAction action) : base("Kosten", where, spalten, orderBy, groupBy, action)
 		{
 
 		}

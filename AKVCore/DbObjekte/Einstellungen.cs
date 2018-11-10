@@ -1,7 +1,8 @@
 ﻿namespace AKVCore
 {
 	using System;
-	using ApS;
+	using ApS.Databases;
+
 	public class Einstellungen : Business
 	{
 		#region Konstruktoren

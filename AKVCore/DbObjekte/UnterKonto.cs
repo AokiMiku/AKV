@@ -1,21 +1,23 @@
 ﻿namespace AKVCore
 {
+	using ApS.Databases;
+
 	public class UnterKonto : Business
 	{
 		#region Konstruktoren
-		public UnterKonto() : base("UnterKonto", "", "", "", "", ApS.SqlAction.Null)
+		public UnterKonto() : base("UnterKonto", "", "", "", "", SqlAction.Null)
 		{
 
 		}
-		public UnterKonto(string where, ApS.SqlAction action) : base("UnterKonto", where, "", "", "", action)
+		public UnterKonto(string where, SqlAction action) : base("UnterKonto", where, "", "", "", action)
 		{
 
 		}
-		public UnterKonto(string where, string spalten, ApS.SqlAction action) : base("UnterKonto", where, spalten, "", "", action)
+		public UnterKonto(string where, string spalten, SqlAction action) : base("UnterKonto", where, spalten, "", "", action)
 		{
 
 		}
-		public UnterKonto(string where, string spalten, string orderBy, string groupBy, ApS.SqlAction action) : base("UnterKonto", where, spalten, orderBy, groupBy, action)
+		public UnterKonto(string where, string spalten, string orderBy, string groupBy, SqlAction action) : base("UnterKonto", where, spalten, orderBy, groupBy, action)
 		{
 
 		}

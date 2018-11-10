@@ -1,21 +1,23 @@
 ﻿namespace AKVCore
 {
+	using ApS.Databases;
+
 	public class Konto : Business
 	{
 		#region Konstruktoren
-		public Konto() : base("Konto", "", "", "", "", ApS.SqlAction.Null)
+		public Konto() : base("Konto", "", "", "", "", SqlAction.Null)
 		{
 
 		}
-		public Konto(string where, ApS.SqlAction action) : base("Konto", where, "", "", "", action)
+		public Konto(string where, SqlAction action) : base("Konto", where, "", "", "", action)
 		{
 
 		}
-		public Konto(string where, string spalten, ApS.SqlAction action) : base("Konto", where, spalten, "", "", action)
+		public Konto(string where, string spalten, SqlAction action) : base("Konto", where, spalten, "", "", action)
 		{
 
 		}
-		public Konto(string where, string spalten, string orderBy, string groupBy, ApS.SqlAction action) : base("Konto", where, spalten, orderBy, groupBy, action)
+		public Konto(string where, string spalten, string orderBy, string groupBy, SqlAction action) : base("Konto", where, spalten, orderBy, groupBy, action)
 		{
 
 		}
