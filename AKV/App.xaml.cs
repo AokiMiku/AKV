@@ -18,7 +18,7 @@ namespace AKV
 		{
 			ApS.Version.MajorVersion = 0;
 			ApS.Version.MinorVersion = 7;
-			ApS.Version.PatchNumber = 5;
+			ApS.Version.PatchNumber = 6;
 		}
 	}
 }
