@@ -783,7 +783,7 @@
 				UserSettings.LetztesUpdateAm = DateTime.Now.Date;
 				try
 				{
-					string updateINI = @"https://github.com/eightball60/Versionen/archive/master.zip";
+					string updateINI = @"https://github.com/AokiMiku/Versionen/archive/master.zip";
 					using (WebClient client = new WebClient())
 					{
 						client.DownloadFile(new Uri(updateINI), Services.GetAppDir() + @"\Update.zip");

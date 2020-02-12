@@ -158,12 +158,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ApS\ApS.Databases\ApS.Databases.csproj">
-      <Project>{efe7d4cb-ac38-415e-a321-a2b8dfaab51e}</Project>
-      <Name>ApS.Databases</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\ApS\ApS.Databases\ApS.Databases.Firebird\ApS.Databases.Firebird.csproj">
-      <Project>{ed3cc517-7e8a-421a-b7cd-fec0cfd1ccd1}</Project>
+      <Project>{e7740997-1ceb-47b7-892f-5db0e6dde3b9}</Project>
       <Name>ApS.Databases.Firebird</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\ApS\ApS\ApS.csproj">
