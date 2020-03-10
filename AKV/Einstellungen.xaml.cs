@@ -106,7 +106,7 @@
 		private void checkUpdate_Click(object sender, RoutedEventArgs e)
 		{
 			Core.Updater up = new Core.Updater();
-			if (up.CheckForUpdate())
+			if (up.CheckForUpdate(UserSettings.LetztesUpdateAm, "AKV"))
 			{
 				this.Update(up);
 			}

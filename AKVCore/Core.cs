@@ -684,11 +684,8 @@
 			}
 		}
 
-		public class Updater
+		public class Updater : ApS.Update.Updater
 		{
-			public event EventHandler<DownloadProgressChangedEventArgs> UpdateProgressChanged;
-			public event EventHandler<System.ComponentModel.AsyncCompletedEventArgs> DownloadCompleted;
-			private Uri updateDownload;
 			public void UpdateDatabase()
 			{
 				if (!Core.CoreSettings.GetSetting("Version02Updated").ToBoolean())
@@ -717,7 +714,7 @@
 				}
 			}
 
-			public void UpdateDatabase(Versionen vers)
+			private void UpdateDatabase(Versionen vers)
 			{
 				switch (vers)
 				{
@@ -777,62 +774,7 @@
 			{
 				ErrorOccured?.Invoke(this, new ErrorEventArgs(e.ErrorMessage));
 			}
-
-			public bool CheckForUpdate()
-			{
-				UserSettings.LetztesUpdateAm = DateTime.Now.Date;
-				try
-				{
-					string updateINI = @"https://github.com/AokiMiku/Versionen/archive/master.zip";
-					using (WebClient client = new WebClient())
-					{
-						client.DownloadFile(new Uri(updateINI), Services.GetAppDir() + @"\Update.zip");
-					}
-				}
-				catch
-				{
-					return false;
-				}
-
-				ZipFile.ExtractToDirectory(Services.GetAppDir() + @"\Update.zip", Services.GetAppDir() + @"\Update");
-				File.Delete(Services.GetAppDir() + @"\Update.zip");
-				IniFile update = new IniFile(Services.GetAppDir() + @"\Update\Versionen-master\Update.ini");
-				string version = update.GetString("AKV", "Version");
-				this.updateDownload = new Uri(update.GetString("AKV", "Link"));
-				Directory.Delete(Services.GetAppDir() + @"\Update", true);
-				return (version != ApS.Version.StringAppVersion);
-			}
-
-			public void DownloadUpdateAsync()
-			{
-				if (this.updateDownload == null)
-					return;
-
-				using (WebClient client = new WebClient())
-				{
-					client.DownloadProgressChanged += Client_DownloadProgressChanged;
-					client.DownloadFileCompleted += Client_DownloadFileCompleted;
-					client.DownloadFileAsync(this.updateDownload, Services.GetAppDir() + @"\Update.exe");
-				}
-			}
-
-			private void Client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-			{
-				this.DownloadCompleted?.Invoke(this, e);
-			}
-
-			private void Client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-			{
-				this.UpdateProgressChanged?.Invoke(this, e);
-			}
-
-			public void InstallUpdate()
-			{
-				Process update = new Process();
-				ProcessStartInfo startInfo = new ProcessStartInfo(Services.GetAppDir() + @"\Update.exe");
-				update.StartInfo = startInfo;
-				update.Start();
-			}
+			
 		}
 		#endregion public
 		#region private/protected

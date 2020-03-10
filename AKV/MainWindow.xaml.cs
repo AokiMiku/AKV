@@ -43,7 +43,7 @@
 			if (UserSettings.Updates && UserSettings.LetztesUpdateAm.AddDays(UserSettings.UpdateAlleXTage) <= DateTime.Now.Date)
 			{
 				Core.Updater updater = new Core.Updater();
-				if (updater.CheckForUpdate())
+				if (updater.CheckForUpdate(UserSettings.LetztesUpdateAm, "AKV"))
 				{
 					this.Update(updater);
 				}
